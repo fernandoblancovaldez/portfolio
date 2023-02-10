@@ -6,7 +6,7 @@ import Portfolio from "../pages/Portfolio";
 
 const Main = () => {
   return (
-    <main className="container">
+    <main className="container-sm">
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/cv" component={CV} />
