@@ -5,15 +5,15 @@ import XP from "../components/XP";
 const CV = () => {
   return (
     <>
-      <section>
+      <section className="container min-vh-100 d-flex align-items-center">
         <Profile />
       </section>
 
-      <section>
+      <section className="container min-vh-100 d-flex align-items-center">
         <XP />
       </section>
 
-      <section>
+      <section className="container min-vh-100 d-flex align-items-center">
         <Skills />
       </section>
     </>

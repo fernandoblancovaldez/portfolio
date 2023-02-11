@@ -3,16 +3,16 @@ import Dropdown from "react-bootstrap/Dropdown";
 function ContactBtnDrpdwn() {
   return (
     <Dropdown>
-      <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
+      <Dropdown.Toggle
+        id="dropdown-button-dark-example1"
+        variant="secondary"
+        className="bg-dark"
+      >
         Contacto
       </Dropdown.Toggle>
 
       <Dropdown.Menu variant="dark">
-        <Dropdown.Item
-          href="#/action-1"
-          active
-          className="bg-success text-light"
-        >
+        <Dropdown.Item href="#footer" active className="bg-success text-light">
           Action
         </Dropdown.Item>
         <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>

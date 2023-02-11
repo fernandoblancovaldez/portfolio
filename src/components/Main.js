@@ -6,13 +6,15 @@ import Portfolio from "../pages/Portfolio";
 
 const Main = () => {
   return (
-    <main className="container-sm">
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/cv" component={CV} />
-        <Route exact path="/portfolio" component={Portfolio} />
-        <Route path="*" component={Error404} />
-      </Switch>
+    <main className=" bg-gradient-lightblue-purple">
+      <article>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/cv" component={CV} />
+          <Route exact path="/portfolio" component={Portfolio} />
+          <Route path="*" component={Error404} />
+        </Switch>
+      </article>
     </main>
   );
 };
