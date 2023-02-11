@@ -2,16 +2,20 @@ import Dropdown from "react-bootstrap/Dropdown";
 
 function ContactBtnDrpdwn() {
   return (
-    <Dropdown>
-      <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
+    <Dropdown className="align-self-center">
+      <Dropdown.Toggle
+        id="dropdown-button-dark-example1"
+        variant="secondary"
+        className="bg-dark"
+      >
         Contacto
       </Dropdown.Toggle>
 
       <Dropdown.Menu variant="dark">
         <Dropdown.Item
-          href="#/action-1"
+          href="#footer"
           active
-          className="bg-success text-light"
+          className="bg-light bg-gradient text-dark"
         >
           Action
         </Dropdown.Item>

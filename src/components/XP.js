@@ -6,9 +6,8 @@ function XP() {
   return (
     <Container fluid="sm">
       <Row>
-        <Col>
+        <Col className="bg-dark text-light">
           <h6>EXPERIENCIA LABORAL</h6>
-          <hr />
         </Col>
       </Row>
       <Row>
