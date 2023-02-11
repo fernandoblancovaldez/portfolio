@@ -61,7 +61,6 @@ function Head() {
                   </svg>
                 </Nav.Link>
               </LinkContainer>
-              {/* <ContactBtnDrpdwn /> */}
             </Nav>
           </Navbar.Collapse>
         </Container>

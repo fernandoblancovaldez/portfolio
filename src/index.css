@@ -1,4 +1,5 @@
 /* ******My Styles****** */
+
 /* .bg-linear-gradient {
   background: linear-gradient(
     rgb(255, 255, 255),
@@ -7,7 +8,11 @@
   );
   backdrop-filter: blur(7.5px);
 } */
+
 .bg-gradient-lightblue-purple {
+  /* 
+  background-color: rgba(white, white, white, white); */
+  /*   background-image: linear-gradient(135deg, #ffffff, #cedccf, #c2bbcd); */
   background-image: linear-gradient(
     131deg,
     rgb(255, 255, 255),
