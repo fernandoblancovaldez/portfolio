@@ -8,11 +8,12 @@ import { LinkContainer } from "react-router-bootstrap";
 function Head() {
   return (
     <header className="fixed-top ">
-      <Navbar className="p-0 " bg="light" expand="lg">
+      <Navbar className="p-0 shadow" bg="light" expand="lg">
         <Container>
           <LinkContainer exact to="/">
-            <Navbar.Brand className="m-1 fs-4 fw-light text-dark">
-              <b className="fw-semibold">fernando</b>blanco
+            <Navbar.Brand className="my-1 mx-auto fs-4 fw-light text-dark">
+              <b className="fw-semibold">fernando</b>
+              <em>blanco</em>
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav " />

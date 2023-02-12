@@ -13,13 +13,13 @@ function Profile() {
       el área de desarrollo web.
       <br />
       <br />
-      <blockquote>
+      <blockquote className="mb-0">
         <p className="fw-light">
           Busco continuamente incorporar nuevas tecnologías que permitan
           optimizar el trabajo del día a día.
         </p>
         <br />
-        <footer className="blockquote-footer fw-light ">
+        <footer className="blockquote-footer fw-light mb-0">
           A continuación ofrezco en mas detalle mis experiencias y habilidades
           adquiridas hasta el momento
         </footer>

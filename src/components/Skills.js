@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 
 function Skills() {
   return (
-    <Container fluid="sm">
+    <Container fluid="sm" className="fs-6 my-font fw-light">
       <Row className="mb-3">
         <Col className="bg-dark text-light">
           <p className="m-1 fw-bold">HABILIDADES</p>{" "}
@@ -12,7 +12,7 @@ function Skills() {
       </Row>
       <Row>
         <Col>
-          <b>En programación</b>
+          <b className="fw-semibold">En programación</b>
           <ul>
             <li>C#</li>
             <li>C++</li>
@@ -24,7 +24,7 @@ function Skills() {
           </ul>
         </Col>
         <Col>
-          <b>Informaticas</b>
+          <b className="fw-semibold">Informaticas</b>
           <ul>
             <li>3D Studio Max</li>
             <li>Adobe After Effects</li>
@@ -35,7 +35,7 @@ function Skills() {
           </ul>
         </Col>
         <Col>
-          <b>En Idiomas</b>
+          <b className="fw-semibold">En Idiomas</b>
           <ul>
             <li>Inglés</li>
             <li>Alemán</li>
