@@ -9,10 +9,6 @@
   backdrop-filter: blur(7.5px);
 } */
 
-.box-shadow {
-  box-shadow: 0px 8px 15px rgb(0 0 0 / 10%);
-}
-
 .bg-gradient-lightblue-purple {
   /* 
   background-color: rgba(white, white, white, white); */
@@ -44,6 +40,10 @@
   font-weight: 900;
 }
 
+.my-font {
+  font-family: "Inter", sans-serif;
+}
+
 .nav-icon {
   height: 3rem;
   width: 3rem;
@@ -71,8 +71,23 @@
   background-color: rgba(245, 166, 159);
 }
 
-.backdrop-blur {
-  backdrop-filter: blur(50px);
+.glass {
+  backdrop-filter: blur(2rem);
+  /* background: linear-gradient(
+    to left bottom,
+    rgba(225, 225, 225, 0.5),
+    rgba(225, 225, 225, 0.3)
+  ); */
+  background-color: rgba(225, 225, 225, 0.3);
+
+  border-radius: 1rem;
+  border: 1px solid transparent;
+  border-top-color: rgba(225, 225, 225, 0.5);
+  border-left-color: rgba(225, 225, 225, 0.5);
+  border-bottom-color: rgba(225, 225, 225, 0.1);
+  border-right-color: rgba(225, 225, 225, 0.1);
+
+  box-shadow: 0px 8px 15px rgb(0 0 0 / 10%);
 }
 
 /* // X-Small devices (portrait phones, less than 576px)

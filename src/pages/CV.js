@@ -9,11 +9,11 @@ const CV = () => {
         <Profile />
       </section>
 
-      <section className="container min-vh-100 d-flex align-items-center">
+      <section className="container d-flex align-items-center">
         <XP />
       </section>
 
-      <section className="container min-vh-100 d-flex align-items-center">
+      <section className="container d-flex align-items-center">
         <Skills />
       </section>
     </>

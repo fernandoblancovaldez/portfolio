@@ -1,15 +1,19 @@
 import Row from "react-bootstrap/Row";
+import Card from "react-bootstrap/Card";
 
 const Form = () => {
   return (
-    <div className="container text-center  d-flex flex-column justify-content-center align-items-center">
+    <Card
+      body
+      className="text-center  d-flex flex-column justify-content-center align-items-center glass "
+    >
       <form
         action="https://formsubmit.co/fernandoblancovaldez@gmail.com"
         method="POST"
       >
         <Row>
           <div className="mb-3 col-lg-2">
-            <input className="btn btn-dark" type="submit" />
+            <input className="btn btn-dark fw-semibold" type="submit" />
             <input
               type="hidden"
               name="_next"
@@ -21,7 +25,7 @@ const Form = () => {
               value="Comentario del Portfolio!"
             ></input>
           </div>
-          <div className="mb-3 col-lg-5">
+          <div className="mb-1 col-lg-5">
             {/* <label className="form-label" for="name">
             Nombre:
           </label> */}
@@ -34,7 +38,7 @@ const Form = () => {
               required
             />
           </div>
-          <div className="mb-3 col-lg-5">
+          <div className="mb-1 col-lg-5">
             {/* <label className="form-label" for="email">
             Email:
           </label> */}
@@ -50,7 +54,7 @@ const Form = () => {
         </Row>
         <Row>
           {" "}
-          <div className="mb-3">
+          <div className="">
             {/* <label className="form-label" for="comments">
             Tus comentarios:
           </label> */}
@@ -59,13 +63,13 @@ const Form = () => {
               className="form-control"
               id="comments"
               name="comments"
-              placeholder="Dejame tus comentarios"
+              placeholder="Tus comentarios"
               required
             ></textarea>
           </div>
         </Row>
       </form>
-    </div>
+    </Card>
   );
 };
 

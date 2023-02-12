@@ -5,17 +5,21 @@ import Card from "react-bootstrap/Card";
 
 function Profile() {
   return (
-    <Card body className="text-center box-shadow w-75 fs-6">
-      <Card.Header>
-        <b>Profesional independiente, proactivo y autodidacta</b> que se
-        desenvuelve en el área de desarrollo web.
-      </Card.Header>
+    <Card
+      body
+      className="text-center glass w-75 fs-6 my-font fw-semibold  pb-0"
+    >
+      Profesional independiente, proactivo y autodidacta que se desenvuelve en
+      el área de desarrollo web.
+      <br />
+      <br />
       <blockquote>
-        <p>
-          Busco continuamente incorporar nuevas tecnologías que nos permitan al
-          equipo y a mi optimizar el trabajo del día a día.
+        <p className="fw-light">
+          Busco continuamente incorporar nuevas tecnologías que permitan
+          optimizar el trabajo del día a día.
         </p>
-        <footer className="blockquote-footer">
+        <br />
+        <footer className="blockquote-footer fw-light ">
           A continuación ofrezco en mas detalle mis experiencias y habilidades
           adquiridas hasta el momento
         </footer>
