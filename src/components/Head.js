@@ -8,11 +8,11 @@ import { LinkContainer } from "react-router-bootstrap";
 function Head() {
   return (
     <header className="fixed-top ">
-      <Navbar className="fw-light" bg="light" expand="lg">
+      <Navbar className="p-0 " bg="light" expand="lg">
         <Container>
           <LinkContainer exact to="/">
-            <Navbar.Brand>
-              <b className="fw-bolder">fernando</b>blanco.
+            <Navbar.Brand className="m-1 fs-4 fw-light text-dark">
+              <b className="fw-semibold">fernando</b>blanco
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav " />
@@ -22,8 +22,8 @@ function Head() {
                 <Nav.Link className="nav-icon bg-dark text-light text-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
+                    width="20"
+                    height="20"
                     fill="currentColor"
                     class="bi bi-house-door-fill"
                     viewBox="0 0 16 16"
@@ -36,8 +36,8 @@ function Head() {
                 <Nav.Link className="nav-icon bg-dark text-light text-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
+                    width="20"
+                    height="20"
                     fill="currentColor"
                     class="bi bi-file-earmark-person-fill"
                     viewBox="0 0 16 16"
@@ -50,14 +50,13 @@ function Head() {
                 <Nav.Link className="nav-icon bg-dark text-light text-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
+                    width="20"
+                    height="20"
                     fill="currentColor"
-                    class="bi bi-briefcase-fill"
+                    class="bi bi-archive-fill"
                     viewBox="0 0 16 16"
                   >
-                    <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v1.384l7.614 2.03a1.5 1.5 0 0 0 .772 0L16 5.884V4.5A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1h-3zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5z" />
-                    <path d="M0 12.5A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5V6.85L8.129 8.947a.5.5 0 0 1-.258 0L0 6.85v5.65z" />
+                    <path d="M12.643 15C13.979 15 15 13.845 15 12.5V5H1v7.5C1 13.845 2.021 15 3.357 15h9.286zM5.5 7h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1zM.8 1a.8.8 0 0 0-.8.8V3a.8.8 0 0 0 .8.8h14.4A.8.8 0 0 0 16 3V1.8a.8.8 0 0 0-.8-.8H.8z" />
                   </svg>
                 </Nav.Link>
               </LinkContainer>

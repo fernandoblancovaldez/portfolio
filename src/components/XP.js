@@ -5,9 +5,9 @@ import Col from "react-bootstrap/Col";
 function XP() {
   return (
     <Container fluid="sm">
-      <Row>
-        <Col className="bg-dark text-light">
-          <h6>EXPERIENCIA LABORAL</h6>
+      <Row className="mb-3">
+        <Col className="bg-dark text-light justify-content-center">
+          <p className="m-1 fw-bold">EXPERIENCIA LABORAL</p>
         </Col>
       </Row>
       <Row>

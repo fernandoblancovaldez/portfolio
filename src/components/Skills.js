@@ -5,9 +5,9 @@ import Col from "react-bootstrap/Col";
 function Skills() {
   return (
     <Container fluid="sm">
-      <Row>
+      <Row className="mb-3">
         <Col className="bg-dark text-light">
-          <h6>HABILIDADES</h6>
+          <p className="m-1 fw-bold">HABILIDADES</p>{" "}
         </Col>
       </Row>
       <Row>

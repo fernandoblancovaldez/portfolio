@@ -2,7 +2,7 @@ import Carousel from "react-bootstrap/Carousel";
 
 function Portfolio() {
   return (
-    <Carousel variant="dark">
+    <Carousel variant="dark" className="min-vh-100">
       <Carousel.Item>
         <img
           className="d-block w-100"

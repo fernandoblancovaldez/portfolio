@@ -9,6 +9,10 @@
   backdrop-filter: blur(7.5px);
 } */
 
+.box-shadow {
+  box-shadow: 0px 8px 15px rgb(0 0 0 / 10%);
+}
+
 .bg-gradient-lightblue-purple {
   /* 
   background-color: rgba(white, white, white, white); */
@@ -25,6 +29,13 @@
     rgb(255, 255, 255)
   );
 
+  /* background: linear-gradient(
+      217deg,
+      rgba(255, 0, 0, 0.8),
+      rgba(255, 0, 0, 0) 70.71%
+    ),
+    linear-gradient(127deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%),
+    linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%); */
   background-attachment: fixed;
 }
 
@@ -58,6 +69,10 @@
 
 .bg-my-optional-color {
   background-color: rgba(245, 166, 159);
+}
+
+.backdrop-blur {
+  backdrop-filter: blur(50px);
 }
 
 /* // X-Small devices (portrait phones, less than 576px)
