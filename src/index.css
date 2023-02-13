@@ -71,6 +71,12 @@
   background-color: rgba(245, 166, 159);
 }
 
+.accordion-flush > *,
+.accordion-button {
+  --bs-bg-opacity: 1;
+  background-color: transparent !important;
+}
+
 .glass {
   backdrop-filter: blur(2rem);
   /* background: linear-gradient(
@@ -80,7 +86,7 @@
   ); */
   background-color: rgba(225, 225, 225, 0.3);
 
-  border-radius: 1rem;
+  /* border-radius: 1rem; */
   border: 1px solid transparent;
   border-top-color: rgba(225, 225, 225, 0.5);
   border-left-color: rgba(225, 225, 225, 0.5);

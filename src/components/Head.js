@@ -7,8 +7,8 @@ import { LinkContainer } from "react-router-bootstrap";
 
 function Head() {
   return (
-    <header className="fixed-top ">
-      <Navbar className="p-0 shadow" bg="light" expand="lg">
+    <header className="fixed-top glass">
+      <Navbar className="p-0 shadow" bg="transparent" expand="lg">
         <Container>
           <LinkContainer exact to="/">
             <Navbar.Brand className="my-1 mx-auto fs-4 fw-light text-dark">
