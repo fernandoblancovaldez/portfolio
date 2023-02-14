@@ -17,7 +17,7 @@ const Form = () => {
             <input
               type="hidden"
               name="_next"
-              value="http://localhost:3000/#/gracias"
+              value="https://cvfernandoblanco2023.netlify.app//#/gracias"
             ></input>
             <input
               type="hidden"
