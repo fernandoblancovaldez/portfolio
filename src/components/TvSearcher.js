@@ -12,12 +12,12 @@ const TvSearcher = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const getShows = async () => {
       let res = await fetch(
           `http://api.tvmaze.com/search/shows?q=${queryToUrl}`
         ),
         json = await res.json();
-
       //console.log(json);
       json.forEach((el) => {
         let show = {
@@ -33,23 +33,25 @@ const TvSearcher = () => {
         };
         setShows((shows) => [...shows, show]);
       });
-      setLoading(false);
     };
     getShows();
+    setLoading(false);
   }, [queryToUrl]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setShows([]);
-    setInputData(null);
-    document.querySelector(".search").value = null;
+    await setShows([]);
+    await setInputData(null);
+    /*  ;
+    
+    document.querySelector(".search").value = null; */
     if (!inputData) {
-      setShows([]);
+      await setShows([]);
       alert("Ingrese datos para una nueva búsqueda");
       return;
     }
-    setQueryToUrl(inputData);
+
+    await setQueryToUrl(inputData);
   };
 
   const handleChange = (e) => {
