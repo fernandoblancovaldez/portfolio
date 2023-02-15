@@ -7,7 +7,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 function Head() {
   return (
-    <header className="fixed-top glass">
+    <header className="sticky-top glass">
       <Navbar className="p-0 shadow" bg="transparent" expand="lg">
         <Container>
           <LinkContainer exact to="/">

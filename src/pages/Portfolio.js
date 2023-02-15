@@ -9,7 +9,7 @@ function Portfolio() {
           <Accordion.Header>
             <li className="fw-semibold">Buscador de series</li>
           </Accordion.Header>
-          <Accordion.Body className="bg-transparent">
+          <Accordion.Body className="px-0 bg-transparent">
             <TvSearcher />
           </Accordion.Body>
         </Accordion.Item>
@@ -17,25 +17,19 @@ function Portfolio() {
           <Accordion.Header>
             <li className="fw-semibold">To-Do List</li>
           </Accordion.Header>
-          <Accordion.Body>
-            <TvSearcher />
-          </Accordion.Body>
+          <Accordion.Body></Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="2">
           <Accordion.Header>
             <li className="fw-semibold">Carrito de Compras</li>
           </Accordion.Header>
-          <Accordion.Body>
-            <TvSearcher />
-          </Accordion.Body>
+          <Accordion.Body></Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="3">
           <Accordion.Header>
             <li className="fw-semibold">App del Clima</li>
           </Accordion.Header>
-          <Accordion.Body>
-            <TvSearcher />
-          </Accordion.Body>
+          <Accordion.Body></Accordion.Body>
         </Accordion.Item>
       </Accordion>
     </div>

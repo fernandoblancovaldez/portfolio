@@ -94,6 +94,14 @@
   border-right-color: rgba(225, 225, 225, 0.1);
 }
 
+.border-glass {
+  border: 1px solid transparent;
+  border-top-color: rgba(225, 225, 225, 0.5);
+  border-left-color: rgba(225, 225, 225, 0.5);
+  border-bottom-color: rgba(225, 225, 225, 0.1);
+  border-right-color: rgba(225, 225, 225, 0.1);
+}
+
 .shadow {
   box-shadow: 0px 8px 15px rgb(0 0 0 / 10%);
 }

@@ -7,7 +7,7 @@ import Portfolio from "../pages/Portfolio";
 
 const Main = () => {
   return (
-    <main className=" bg-gradient-lightblue-purple mt-4">
+    <main className=" bg-gradient-lightblue-purple ">
       <article>
         <Switch>
           <Route exact path="/" component={Home} />
