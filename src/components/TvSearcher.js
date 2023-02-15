@@ -41,7 +41,7 @@ const TvSearcher = () => {
     };
     getShows();
     setLoading(false);
-  }, [queryToUrl]);
+  }, [queryToUrl, shows]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
