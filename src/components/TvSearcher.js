@@ -37,7 +37,7 @@ const TvSearcher = () => {
         /* console.log(newSearchedShows); */
       });
       setShows(newSearchedShows);
-      console.log(shows);
+      /* console.log(shows); */
     };
     getShows();
     setLoading(false);
