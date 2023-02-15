@@ -13,10 +13,6 @@ const TvSearcher = () => {
 
   useEffect(() => {
     const getShows = async () => {
-      setLoading(true);
-      setShows([]);
-      setInputData(null);
-      document.querySelector(".search").value = "";
       let res = await fetch(
           `http://api.tvmaze.com/search/shows?q=${queryToUrl}`
         ),
@@ -44,6 +40,10 @@ const TvSearcher = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setShows([]);
+    setInputData(null);
+    document.querySelector(".search").value = null;
     if (!inputData) {
       setShows([]);
       alert("Ingrese datos para una nueva búsqueda");
