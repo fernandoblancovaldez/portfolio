@@ -12,8 +12,9 @@ const TvSearcher = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
     const getShows = async () => {
+      setLoading(true);
+      let newSearchedShows = [];
       let res = await fetch(
           `http://api.tvmaze.com/search/shows?q=${queryToUrl}`
         ),
@@ -31,8 +32,12 @@ const TvSearcher = () => {
             : "http://static.tvmaze.com/images/no-img/no-img-portrait-text.png",
           url: el.show.url ? el.show.url : "#",
         };
-        setShows((shows) => [...shows, show]);
+        newSearchedShows = [...newSearchedShows, show];
+
+        /* console.log(newSearchedShows); */
       });
+      setShows(newSearchedShows);
+      console.log(shows);
     };
     getShows();
     setLoading(false);
@@ -40,7 +45,6 @@ const TvSearcher = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await setShows([]);
     await setInputData(null);
     /*  ;
     
