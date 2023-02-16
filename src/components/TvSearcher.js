@@ -16,6 +16,7 @@ const TvSearcher = () => {
       setShows([]);
       setInputData(null);
       document.querySelector(".search").value = "";
+
       let res = await fetch(
           `https://api.tvmaze.com/search/shows?q=${queryToUrl}`
         ),
@@ -43,12 +44,15 @@ const TvSearcher = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    await setInputData(null);
+
     if (!inputData) {
-      setShows([]);
+      await setShows([]);
       alert("Ingrese datos para una nueva búsqueda");
       return;
     }
-    setQueryToUrl(inputData);
+
+    await setQueryToUrl(inputData);
   };
 
   const handleChange = (e) => {
