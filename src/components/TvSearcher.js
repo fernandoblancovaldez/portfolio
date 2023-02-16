@@ -13,12 +13,11 @@ const TvSearcher = () => {
 
   useEffect(() => {
     const getShows = async () => {
-      setLoading(true);
       setShows([]);
       setInputData(null);
       document.querySelector(".search").value = "";
       let res = await fetch(
-          `http://api.tvmaze.com/search/shows?q=${queryToUrl}`
+          `https://api.tvmaze.com/search/shows?q=${queryToUrl}`
         ),
         json = await res.json();
 
@@ -32,7 +31,7 @@ const TvSearcher = () => {
             : "Sin descripción",
           img: el.show.image
             ? el.show.image.medium
-            : "http://static.tvmaze.com/images/no-img/no-img-portrait-text.png",
+            : "https://static.tvmaze.com/images/no-img/no-img-portrait-text.png",
           url: el.show.url ? el.show.url : "#",
         };
         setShows((shows) => [...shows, show]);
@@ -44,6 +43,7 @@ const TvSearcher = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     if (!inputData) {
       setShows([]);
       alert("Ingrese datos para una nueva búsqueda");
@@ -76,7 +76,7 @@ const TvSearcher = () => {
           </Col>
         </Row>
       </form>
-      <Row className="gap-lg-1 mt-3 align-items-center justify-content-center">
+      <Row className="gap-lg-1 mt-3 align-items-center justify-content-center ">
         {loading && <Loader />}
         {shows &&
           !loading &&
