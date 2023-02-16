@@ -21,7 +21,6 @@ const TvSearcher = () => {
         ),
         json = await res.json();
 
-      //console.log(json);
       json.forEach((el) => {
         let show = {
           key: el.show.id,
