@@ -16,7 +16,7 @@ const TvSearcher = () => {
       setLoading(true);
       let newSearchedShows = [];
       let res = await fetch(
-          `http://api.tvmaze.com/search/shows?q=${queryToUrl}`
+          `https://api.tvmaze.com/search/shows?q=${queryToUrl}`
         ),
         json = await res.json();
       //console.log(json);
@@ -29,7 +29,7 @@ const TvSearcher = () => {
             : "Sin descripción",
           img: el.show.image
             ? el.show.image.medium
-            : "http://static.tvmaze.com/images/no-img/no-img-portrait-text.png",
+            : "https://static.tvmaze.com/images/no-img/no-img-portrait-text.png",
           url: el.show.url ? el.show.url : "#",
         };
         newSearchedShows = [...newSearchedShows, show];
@@ -41,7 +41,7 @@ const TvSearcher = () => {
     };
     getShows();
     setLoading(false);
-  }, [queryToUrl, shows]);
+  }, [queryToUrl]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
