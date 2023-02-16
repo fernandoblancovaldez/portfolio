@@ -16,11 +16,11 @@ const TvSearcher = () => {
       setShows([]);
       setInputData(null);
       document.querySelector(".search").value = "";
+      let newSearchedShows = [];
       let res = await fetch(
           `https://api.tvmaze.com/search/shows?q=${queryToUrl}`
         ),
         json = await res.json();
-
       //console.log(json);
       json.forEach((el) => {
         let show = {
@@ -34,22 +34,29 @@ const TvSearcher = () => {
             : "https://static.tvmaze.com/images/no-img/no-img-portrait-text.png",
           url: el.show.url ? el.show.url : "#",
         };
-        setShows((shows) => [...shows, show]);
+        newSearchedShows = [...newSearchedShows, show];
+
+        /* console.log(newSearchedShows); */
       });
-      setLoading(false);
+      setShows(newSearchedShows);
+      /* console.log(shows); */
     };
     getShows();
+    setLoading(false);
   }, [queryToUrl]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    await setInputData(null);
+
     if (!inputData) {
-      setShows([]);
+      await setShows([]);
       alert("Ingrese datos para una nueva búsqueda");
       return;
     }
-    setQueryToUrl(inputData);
+
+    await setQueryToUrl(inputData);
   };
 
   const handleChange = (e) => {
