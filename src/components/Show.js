@@ -3,9 +3,9 @@ import Card from "react-bootstrap/Card";
 
 function Show({ name, text, img, url }) {
   return (
-    <Card style={{ width: "14rem" }} className="mx-auto shadow ">
+    <Card style={{ width: "14rem" }} className="my-1 mx-auto p-0 shadow">
       <Card.Img variant="top" src={img} alt={name} />
-      <Card.Body className="px-0 px-lg-2">
+      <Card.Body className="px-2 ">
         <Card.Title className="text-truncate">{name}</Card.Title>
         <Card.Text className="fs-6 lh-sm text-truncate">{text}</Card.Text>
         <Button

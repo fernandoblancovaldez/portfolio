@@ -6,8 +6,8 @@ const Footer = () => {
     >
       <small>
         &copy; 2023 <b className="fw-semibold">fernando</b>
-        <em>blanco</em> | sitio creado con React, Router, Vanilla JS, Bootstrap,
-        CSS puro, Fetch.
+        <em>blanco</em> | sitio creado con React, HashRouter, Vanilla JS,
+        Bootstrap, CSS puro, Fetch.
       </small>
     </footer>
   );
