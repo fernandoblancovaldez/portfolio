@@ -79,7 +79,7 @@ const TvSearcher = () => {
           </Col>
         </Row>
       </form>
-      <Row className="gap-lg-1 mt-3 align-items-center justify-content-center ">
+      <Row className="gap-1 mt-3 align-items-center justify-content-around ">
         {loading && <Loader />}
         {shows &&
           !loading &&

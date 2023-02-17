@@ -3,11 +3,13 @@ import Card from "react-bootstrap/Card";
 
 function Show({ name, text, img, url }) {
   return (
-    <Card style={{ width: "14rem" }} className="my-1 mx-auto p-0 shadow">
+    <Card style={{ width: "14rem" }} className="p-0 shadow">
       <Card.Img variant="top" src={img} alt={name} />
       <Card.Body className="px-2 ">
-        <Card.Title className="text-truncate">{name}</Card.Title>
-        <Card.Text className="fs-6 lh-sm text-truncate">{text}</Card.Text>
+        <Card.Title className="text-truncate fs-5 hero-font">{name}</Card.Title>
+        <Card.Text className="lh-sm text-truncate">
+          <small>{text}</small>
+        </Card.Text>
         <Button
           className="btn btn-dark btn-sm"
           variant="primary"

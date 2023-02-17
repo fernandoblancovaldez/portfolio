@@ -8,7 +8,7 @@ import Portfolio from "../pages/Portfolio";
 const Main = () => {
   return (
     <main className=" bg-gradient-lightblue-purple ">
-      <article>
+      <article className="d-flex flex-column justify-content-center align-items-center">
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/cv" component={CV} />
