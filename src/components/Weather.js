@@ -2,10 +2,12 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useFetch } from "../hooks/useFetch";
 
 const Weather = () => {
+  useFetch();
   return (
-    <Card className="glass border-glass shadow py-3 gap-3 text-center align-items-center">
+    <Card className="glass-dark text-secondary border-glass shadow py-3 gap-3 text-center align-items-center max-w-weather mx-auto">
       <Row>
         <h3 className="fw-semibold fs-4 m-0">Gonzalez Catan</h3>
       </Row>

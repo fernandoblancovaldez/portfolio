@@ -78,7 +78,7 @@
 }
 
 .glass {
-  backdrop-filter: blur(2rem);
+  backdrop-filter: blur(1rem);
   /* background: linear-gradient(
     to left bottom,
     rgba(225, 225, 225, 0.5),
@@ -87,6 +87,17 @@
   background-color: rgba(225, 225, 225, 0.3);
 
   /* border-radius: 1rem; */
+  border: 1px solid transparent;
+  border-top-color: rgba(225, 225, 225, 0.5);
+  border-left-color: rgba(225, 225, 225, 0.5);
+  border-bottom-color: rgba(225, 225, 225, 0.1);
+  border-right-color: rgba(225, 225, 225, 0.1);
+}
+
+.glass-dark {
+  backdrop-filter: blur(1rem);
+  background-color: rgba(194, 187, 205, 0.2);
+
   border: 1px solid transparent;
   border-top-color: rgba(225, 225, 225, 0.5);
   border-left-color: rgba(225, 225, 225, 0.5);
@@ -104,6 +115,10 @@
 
 .shadow {
   box-shadow: 0px 8px 15px rgb(0 0 0 / 10%);
+}
+
+.max-w-weather {
+  max-width: 476px;
 }
 
 * {
