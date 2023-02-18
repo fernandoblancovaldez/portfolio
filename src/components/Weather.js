@@ -1,34 +1,110 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useFetch } from "../hooks/useFetch";
+import getLocation from "../helpers/getLocation";
 
 const Weather = () => {
+  const [inputText, setInputText] = useState("");
+  const [dataToApi, setDataToApi] = useState("q=Buenos Aires&units=metric");
+  const [currentPosition, setCurrentPosition] = useState(null);
+  const weatherApiKey = "6ec6130360ef0c0a8405d52ffaf7b224";
+
+  let url = `https://api.openweathermap.org/data/2.5/weather?${dataToApi}&appid=${weatherApiKey}`;
+
+  let json = useFetch(url);
+
+  let { data } = json;
+
+  if (!data) return null;
+
+  const handleInputText = async (e) => {
+    await setInputText(e.target.value.toLowerCase());
+  };
+
+  const handleSubmit = async (e) => {
+    await e.preventDefault();
+    await setDataToApi(`q=${inputText}&units=metric`);
+  };
+
+  const handleCurrentLocate = async (e) => {
+    await e.preventDefault();
+    await getLocation(await setCurrentPosition);
+    await setDataToApi(
+      `lat=${currentPosition.latitude}&lon=${currentPosition.longitude}`
+    );
+    await setInputText("");
+    document.querySelector("#weather-search").value = "";
+
+    console.log(json);
+    console.log(currentPosition);
+  };
+
   return (
     <Card className="glass-dark text-secondary border-glass shadow py-3 gap-3 text-center align-items-center max-w-weather mx-auto">
+      <Col>
+        <button
+          className="btn-animation text-secondary  bg-transparent border-0 mx-auto"
+          onClick={handleCurrentLocate}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="34"
+            height="34"
+            fill="currentColor"
+            class="bi bi-geo-alt-fill"
+            viewBox="0 0 16 16"
+          >
+            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+          </svg>
+        </button>
+      </Col>
+      <form onSubmit={handleSubmit}>
+        <Row className="align-items-center">
+          <div className="input-group">
+            <input
+              id="weather-search"
+              type="search"
+              className="form-control bg-transparent"
+              placeholder="Ingresa tu ciudad..."
+              onChange={handleInputText}
+            />
+            <button
+              className="btn btn-outline-secondary border-secondary"
+              type="submit"
+            >
+              Buscar
+            </button>
+          </div>
+        </Row>
+      </form>
       <Row>
-        <h3 className="fw-semibold fs-4 m-0">Gonzalez Catan</h3>
+        <h3 className="fw-semibold fs-4 m-0">{data.name}</h3>
       </Row>
       <Col>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="54"
-          height="54"
-          fill="currentColor"
-          class="bi bi-cloud-moon-fill"
-          viewBox="0 0 16 16"
-        >
-          <path d="M11.473 11a4.5 4.5 0 0 0-8.72-.99A3 3 0 0 0 3 16h8.5a2.5 2.5 0 0 0 0-5h-.027z" />
-          <path d="M11.286 1.778a.5.5 0 0 0-.565-.755 4.595 4.595 0 0 0-3.18 5.003 5.46 5.46 0 0 1 1.055.209A3.603 3.603 0 0 1 9.83 2.617a4.593 4.593 0 0 0 4.31 5.744 3.576 3.576 0 0 1-2.241.634c.162.317.295.652.394 1a4.59 4.59 0 0 0 3.624-2.04.5.5 0 0 0-.565-.755 3.593 3.593 0 0 1-4.065-5.422z" />
-        </svg>
+        <img
+          src={`https://openweathermap.org/img/w/${data.weather[0].icon}.png`}
+          alt={data.weather[0].main}
+          width="100"
+          height="100"
+        />
       </Col>
       <Col>
-        <h3 className="hero-font fw-light fs-1 m-0">12°</h3>
+        <h3 className="hero-font fw-light fs-1 m-0">
+          {Math.round(json.data.main.temp)}°C
+        </h3>
         <Row>
-          <small className="fw-bold mb-0">Mayormente despejado</small>
+          <small className="fw-bold mb-0">
+            {data.weather[0].description.charAt(0).toUpperCase()}
+            {data.weather[0].description.slice(1)}
+          </small>
         </Row>
         <Row>
-          <small className="fw-bold mb-0">Máx.: 27° Min.: 11°</small>
+          <small className="fw-bold mb-0">
+            Máx.: {Math.round(json.data.main.temp_max)}° Min.:{" "}
+            {Math.round(json.data.main.temp_min)}°
+          </small>
         </Row>
       </Col>
       <Card className="container bg-transparent border-glass mx-auto">

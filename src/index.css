@@ -67,6 +67,19 @@
   transform: translateY(-1px);
 }
 
+.btn-animation {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+.btn-animation:hover {
+  color: rgba(21, 25, 29, 0.9);
+  transform: translateY(-7px);
+}
+.btn-animation:active {
+  transform: translateY(-1px);
+}
+
 .bg-my-optional-color {
   background-color: rgba(245, 166, 159);
 }
@@ -84,7 +97,7 @@
     rgba(225, 225, 225, 0.5),
     rgba(225, 225, 225, 0.3)
   ); */
-  background-color: rgba(225, 225, 225, 0.3);
+  background-color: rgba(225, 225, 225, 0.2);
 
   /* border-radius: 1rem; */
   border: 1px solid transparent;

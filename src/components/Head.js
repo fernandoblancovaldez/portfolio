@@ -18,7 +18,7 @@ function Head() {
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav " />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ms-auto flex-row">
+            <Nav className="flex-row justify-content-evenly ms-lg-auto">
               <LinkContainer exact to="/">
                 <Nav.Link className="nav-icon bg-dark text-light text-center">
                   <svg
