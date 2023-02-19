@@ -31,21 +31,18 @@ const Weather = () => {
   const handleCurrentLocate = async (e) => {
     await e.preventDefault();
     await getLocation(await setCurrentPosition);
-    await setDataToApi(
-      `lat=${currentPosition.latitude}&lon=${currentPosition.longitude}`
-    );
     await setInputText("");
     document.querySelector("#weather-search").value = "";
-
-    console.log(json);
-    console.log(currentPosition);
+    await setDataToApi(
+      `units=metric&lat=${currentPosition.latitude}&lon=${currentPosition.longitude}`
+    );
   };
 
   return (
     <Card className="glass-dark text-secondary border-glass shadow py-3 gap-3 text-center align-items-center max-w-weather mx-auto">
       <Col>
         <button
-          className="btn-animation text-secondary  bg-transparent border-0 mx-auto"
+          className="btn-animation text-secondary bg-transparent border-0 mx-auto d-flex align-items-center justify-content-center"
           onClick={handleCurrentLocate}
         >
           <svg
