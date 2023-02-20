@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import TodolisthomeNewTask from "./TodolisthomeNewTask";
 import TodolisthomeTaskList from "./TodolisthomeTaskList";
@@ -58,7 +59,7 @@ const ToDoListHome = ({ userEmail }) => {
     };
 
     fetchTasks();
-  });
+  }, []);
 
   return (
     <Container>
