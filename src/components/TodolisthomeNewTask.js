@@ -3,19 +3,27 @@ import { Container, Form, Row, Col, Button } from "react-bootstrap";
 
 import firebaseApp from "../helpers/toDoListCreds";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 const firestore = getFirestore(firebaseApp);
+const storage = getStorage(firebaseApp);
 
 const TodolisthomeNewTask = ({ tasks, userEmail, setArrTasks }) => {
-  const addTask = async (e) => {
+  let dwnldURL;
+
+  const handleAddTask = async (e) => {
     e.preventDefault();
+
     //crear nueva tarea
     const description = e.target.taskDescription.value;
     const task = {
       id: +new Date(),
       description: description,
-      url: "https://picsum.photos/420",
+      url: dwnldURL,
     };
+
+    //limpiar input
     e.target.taskDescription.value = "";
+
     //crear nuevo array de tareas
     const newTasks = [...tasks, task];
 
@@ -26,9 +34,22 @@ const TodolisthomeNewTask = ({ tasks, userEmail, setArrTasks }) => {
     //actualizar state
     setArrTasks(newTasks);
   };
+
+  const handleAddFile = async (e) => {
+    //detectar archivo
+    const localFile = e.target.files[0];
+
+    //cargarlo a firebase storage
+    const fileRef = ref(storage, `docs/${localFile.name}`);
+    await uploadBytes(fileRef, localFile);
+
+    //obtener url de descarga
+    dwnldURL = await getDownloadURL(fileRef);
+  };
+
   return (
     <Container>
-      <Form onSubmit={addTask}>
+      <Form onSubmit={handleAddTask}>
         <Row className="gap-2 align-items-center">
           <Col className="col-12 col-lg-4">
             <Form.Control
@@ -38,7 +59,11 @@ const TodolisthomeNewTask = ({ tasks, userEmail, setArrTasks }) => {
             />
           </Col>
           <Col className="col-8 col-lg-4">
-            <Form.Control type="file" placeholder="Añade archivo" />
+            <Form.Control
+              type="file"
+              placeholder="Añade archivo"
+              onChange={handleAddFile}
+            />
           </Col>
           <Col>
             <Button type="submit" variant="dark">
