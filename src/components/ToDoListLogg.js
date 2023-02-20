@@ -24,10 +24,9 @@ const ToDoListLogg = () => {
     /* console.log(email, pass); */
 
     if (userRegistering) {
-      const user = await createUserWithEmailAndPassword(auth, email, pass);
-      console.log(user);
+      await createUserWithEmailAndPassword(auth, email, pass);
     } else {
-      signInWithEmailAndPassword(auth, email, pass);
+      await signInWithEmailAndPassword(auth, email, pass);
     }
   };
 
