@@ -58,7 +58,7 @@ const ToDoListHome = ({ userEmail }) => {
     };
 
     fetchTasks();
-  }, []);
+  });
 
   return (
     <Container>
