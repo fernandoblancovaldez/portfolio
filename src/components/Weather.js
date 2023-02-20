@@ -7,8 +7,8 @@ import getLocation from "../helpers/getLocation";
 
 const Weather = () => {
   const [inputText, setInputText] = useState("");
-  const [dataToApi, setDataToApi] = useState("q=Buenos Aires&units=metric");
   const [currentPosition, setCurrentPosition] = useState(null);
+  const [dataToApi, setDataToApi] = useState("q=Buenos Aires&units=metric");
   const weatherApiKey = "6ec6130360ef0c0a8405d52ffaf7b224";
 
   let url = `https://api.openweathermap.org/data/2.5/weather?${dataToApi}&appid=${weatherApiKey}`;
@@ -31,15 +31,15 @@ const Weather = () => {
   const handleCurrentLocate = async (e) => {
     await e.preventDefault();
     await getLocation(await setCurrentPosition);
-    await setInputText("");
-    document.querySelector("#weather-search").value = "";
-    await setDataToApi(
+    setDataToApi(
       `units=metric&lat=${currentPosition.latitude}&lon=${currentPosition.longitude}`
     );
+    setInputText("");
+    document.querySelector("#weather-search").value = "";
   };
 
   return (
-    <Card className="glass-dark text-secondary border-glass shadow py-3 gap-3 text-center align-items-center max-w-weather mx-auto">
+    <Card className="glass-dark text-dark border-glass shadow py-3 gap-3 text-center align-items-center max-w-weather mx-auto">
       <Col>
         <button
           className="btn-animation text-secondary bg-transparent border-0 mx-auto d-flex align-items-center justify-content-center"

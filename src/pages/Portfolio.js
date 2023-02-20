@@ -1,4 +1,5 @@
 import Accordion from "react-bootstrap/Accordion";
+import ToDoList from "../components/ToDoList";
 import TvSearcher from "../components/TvSearcher";
 import Weather from "../components/Weather";
 
@@ -26,7 +27,9 @@ function Portfolio() {
           <Accordion.Header>
             <li className="fw-semibold">To-Do List</li>
           </Accordion.Header>
-          <Accordion.Body></Accordion.Body>
+          <Accordion.Body>
+            <ToDoList />
+          </Accordion.Body>
         </Accordion.Item>
         <Accordion.Item eventKey="3">
           <Accordion.Header>
