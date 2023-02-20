@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 
 import firebaseApp from "../helpers/toDoListCreds";
@@ -8,7 +8,7 @@ const firestore = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
 const TodolisthomeNewTask = ({ tasks, userEmail, setArrTasks }) => {
-  let dwnldURL;
+  const [dwnldURL, setDwnldURL] = useState("https://picsum.photos/420");
 
   const handleAddTask = async (e) => {
     e.preventDefault();
@@ -29,10 +29,12 @@ const TodolisthomeNewTask = ({ tasks, userEmail, setArrTasks }) => {
 
     //actualizar base de datos
     const refDoc = doc(firestore, `usuarios/${userEmail}`);
-    updateDoc(refDoc, { tasks: [...newTasks] });
+    await updateDoc(refDoc, { tasks: [...newTasks] });
 
     //actualizar state
     setArrTasks(newTasks);
+    await setDwnldURL("https://picsum.photos/420");
+    console.log(dwnldURL);
   };
 
   const handleAddFile = async (e) => {
@@ -44,7 +46,8 @@ const TodolisthomeNewTask = ({ tasks, userEmail, setArrTasks }) => {
     await uploadBytes(fileRef, localFile);
 
     //obtener url de descarga
-    dwnldURL = await getDownloadURL(fileRef);
+    await setDwnldURL(await getDownloadURL(fileRef));
+    console.log(dwnldURL);
   };
 
   return (
