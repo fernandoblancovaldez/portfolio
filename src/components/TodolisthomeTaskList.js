@@ -25,9 +25,11 @@ const TodolisthomeTaskList = ({ tasks, userEmail, setArrTasks }) => {
             <Row key={task.id} className="align-items-center">
               <Col>{task.description}</Col>
               <Col>
-                <Button variant="secondary" className=" btn-sm">
-                  Ver Archivo
-                </Button>
+                <a href={task.url} target="_BLANK" rel="noreferrer noopener">
+                  <Button variant="secondary" className=" btn-sm">
+                    Ver Archivo
+                  </Button>
+                </a>
               </Col>
               <Col>
                 <Button

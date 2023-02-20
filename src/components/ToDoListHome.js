@@ -63,7 +63,7 @@ const ToDoListHome = ({ userEmail }) => {
 
   return (
     <Container>
-      <h4>Hola, sesion iniciada</h4>
+      <h4>Hola {userEmail}, sesion iniciada</h4>
       <Button onClick={() => signOut(auth)}>Cerrar sesión</Button>
       <hr />
       <TodolisthomeNewTask
