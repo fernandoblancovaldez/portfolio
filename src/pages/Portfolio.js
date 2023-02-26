@@ -1,4 +1,5 @@
 import Accordion from "react-bootstrap/Accordion";
+import Shop from "../components/shop/Shop";
 import ToDoList from "../components/ToDoList";
 import TvSearcher from "../components/TvSearcher";
 import Weather from "../components/Weather";
@@ -35,7 +36,9 @@ function Portfolio() {
           <Accordion.Header>
             <li className="fw-semibold">Carrito de Compras</li>
           </Accordion.Header>
-          <Accordion.Body></Accordion.Body>
+          <Accordion.Body>
+            <Shop />
+          </Accordion.Body>
         </Accordion.Item>
       </Accordion>
     </div>

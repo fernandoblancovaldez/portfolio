@@ -107,6 +107,10 @@
   border-right-color: rgba(225, 225, 225, 0.1);
 }
 
+.bg-blur {
+  backdrop-filter: blur(1rem);
+}
+
 .glass-dark {
   backdrop-filter: blur(1rem);
   background-color: rgba(194, 187, 205, 0.2);
