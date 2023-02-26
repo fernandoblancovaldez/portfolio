@@ -1,19 +1,21 @@
 import React from "react";
-import { /* BrowserRouter as Router, */ HashRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { HashRouter } from "react-router-dom";
 import Footer from "./components/Footer";
 import Head from "./components/Head";
 import Main from "./components/Main";
+import store from "./store";
 
 function App() {
   return (
     <>
-      {/* <Router>
-      </Router> */}
-      <HashRouter>
-        <Head />
-        <Main />
-      </HashRouter>
-      <Footer />
+      <Provider store={store}>
+        <HashRouter>
+          <Head />
+          <Main />
+        </HashRouter>
+        <Footer />
+      </Provider>
     </>
   );
 }

@@ -1,6 +1,11 @@
-import { TYPES } from "../actions/shopActions";
+import {
+  ADD_TO_CART,
+  CLEAR_CART,
+  REMOVE_ALL_FROM_CART,
+  REMOVE_ONE_FROM_CART,
+} from "../types";
 
-export const shopInitialState = {
+export const initialState = {
   items: [
     {
       id: 1,
@@ -60,9 +65,9 @@ export const shopInitialState = {
   cart: [],
 };
 
-export function shopReducer(state, action) {
+export function shopReducer(state = initialState, action) {
   switch (action.type) {
-    case TYPES.ADD_TO_CART: {
+    case ADD_TO_CART: {
       let newItem = state.items.find((item) => item.id === action.payload);
       let itemInCart = state.cart.find((item) => item.id === newItem.id);
       return itemInCart
@@ -76,7 +81,7 @@ export function shopReducer(state, action) {
           }
         : { ...state, cart: [...state.cart, { ...newItem, quantity: 1 }] };
     }
-    case TYPES.REMOVE_ONE_FROM_CART: {
+    case REMOVE_ONE_FROM_CART: {
       let itemInCart = state.cart.find((item) => item.id === action.payload);
       return itemInCart.quantity > 1
         ? {
@@ -92,14 +97,14 @@ export function shopReducer(state, action) {
             cart: state.cart.filter((item) => item.id !== action.payload),
           };
     }
-    case TYPES.REMOVE_ALL_FROM_CART: {
+    case REMOVE_ALL_FROM_CART: {
       return {
         ...state,
         cart: state.cart.filter((item) => item.id !== action.payload),
       };
     }
-    case TYPES.CLEAR_CART: {
-      return shopInitialState;
+    case CLEAR_CART: {
+      return initialState;
     }
     default:
       return state;

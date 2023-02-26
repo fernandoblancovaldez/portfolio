@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 
-const CartItem = ({ data, delFromCart }) => {
+const CartItem = ({ data, delOneFromCart, delAllFromCart }) => {
   let { name, id, price, url, quantity } = data;
   return (
     <ListGroup.Item className="d-flex align-items-center gap-2 py-2">
@@ -26,10 +26,13 @@ const CartItem = ({ data, delFromCart }) => {
             size="sm"
             style={{ width: "10rem" }}
           >
-            <Button variant="secondary" onClick={() => delFromCart(id)}>
+            <Button variant="secondary" onClick={() => delOneFromCart(id)}>
               -1
             </Button>
-            <Button variant="secondary" onClick={() => delFromCart(id, true)}>
+            <Button
+              variant="secondary"
+              onClick={() => delAllFromCart(id, true)}
+            >
               Quitar item
             </Button>
           </ButtonGroup>

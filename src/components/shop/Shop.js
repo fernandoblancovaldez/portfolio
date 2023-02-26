@@ -1,37 +1,25 @@
-import React, { useReducer } from "react";
+import React from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Cart from "./Cart";
-import { shopInitialState, shopReducer } from "../../reducers/shopReducer";
 import StoreItem from "./StoreItem";
-import { TYPES } from "../../actions/shopActions";
 import Image from "react-bootstrap/Image";
 import Ulises from "../../assets/shop-ulises.jpeg";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, clearCart } from "../../actions/shopActions";
 
 const Shop = () => {
-  const [state, dispatch] = useReducer(shopReducer, shopInitialState);
-  const { items, cart } = state;
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { items } = state.shop;
 
-  const addToCart = (id) => {
-    dispatch({ type: TYPES.ADD_TO_CART, payload: id });
-  };
-
-  const delFromCart = (id, all = false) => {
-    all
-      ? dispatch({ type: TYPES.REMOVE_ALL_FROM_CART, payload: id })
-      : dispatch({ type: TYPES.REMOVE_ONE_FROM_CART, payload: id });
-  };
-
-  const clearCart = () => {
-    dispatch({ type: TYPES.CLEAR_CART });
-  };
   return (
     <Card className="glass-dark text-dark border-glass shadow gap-2 align-items-center justify-content-around">
       <Row className="mt-2">
-        <p className="fs-5 m-0">Comprame alimento por favor</p>
+        <p className="fs-5 my-3 hero-font">miau, comprame comida !</p>
       </Row>
       <Row>
         <Col>
@@ -52,8 +40,8 @@ const Shop = () => {
             size="sm"
             style={{ width: "10rem" }}
           >
-            <Cart cart={cart} delFromCart={delFromCart} />
-            <Button variant="secondary" onClick={clearCart}>
+            <Cart />
+            <Button variant="secondary" onClick={() => dispatch(clearCart())}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -72,7 +60,11 @@ const Shop = () => {
           </ButtonGroup>
         </Row>
         {items.map((item) => (
-          <StoreItem key={item.id} data={item} addToCart={addToCart} />
+          <StoreItem
+            key={item.id}
+            data={item}
+            addToCart={() => dispatch(addToCart(item.id))}
+          />
         ))}
       </Row>
     </Card>

@@ -3,9 +3,15 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import CartItem from "./CartItem";
 import ListGroup from "react-bootstrap/ListGroup";
+import { useDispatch, useSelector } from "react-redux";
+import { delFromCart } from "../../actions/shopActions";
 
-function Cart({ cart, delFromCart }) {
+function Cart() {
   const [show, setShow] = useState(false);
+
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { cart } = state.shop;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -43,11 +49,18 @@ function Cart({ cart, delFromCart }) {
         </Modal.Header>
         <Modal.Body>
           <ListGroup className="align-items-center">
-            {cart.length < 1
-              ? "Dale, invitame la cena x fa"
-              : cart.map((item, index) => (
-                  <CartItem key={index} data={item} delFromCart={delFromCart} />
-                ))}
+            {cart.length < 1 ? (
+              <p className="m-0">😺 invitame la cena por favor, miau</p>
+            ) : (
+              cart.map((item, index) => (
+                <CartItem
+                  key={index}
+                  data={item}
+                  delOneFromCart={() => dispatch(delFromCart(item.id))}
+                  delAllFromCart={() => dispatch(delFromCart(item.id, true))}
+                />
+              ))
+            )}
           </ListGroup>
         </Modal.Body>
         <Modal.Footer>
