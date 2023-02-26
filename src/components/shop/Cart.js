@@ -43,9 +43,11 @@ function Cart({ cart, delFromCart }) {
         </Modal.Header>
         <Modal.Body>
           <ListGroup className="align-items-center">
-            {cart.map((item, index) => (
-              <CartItem key={index} data={item} delFromCart={delFromCart} />
-            ))}
+            {cart.length < 1
+              ? "Dale, invitame la cena x fa"
+              : cart.map((item, index) => (
+                  <CartItem key={index} data={item} delFromCart={delFromCart} />
+                ))}
           </ListGroup>
         </Modal.Body>
         <Modal.Footer>

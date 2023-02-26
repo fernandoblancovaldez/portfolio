@@ -19,11 +19,15 @@ const Shop = () => {
     dispatch({ type: TYPES.ADD_TO_CART, payload: id });
   };
 
-  const delFromCart = (id) => {
-    dispatch({ type: TYPES.REMOVE_ONE_FROM_CART, payload: id });
+  const delFromCart = (id, all = false) => {
+    all
+      ? dispatch({ type: TYPES.REMOVE_ALL_FROM_CART, payload: id })
+      : dispatch({ type: TYPES.REMOVE_ONE_FROM_CART, payload: id });
   };
 
-  const clearCart = () => {};
+  const clearCart = () => {
+    dispatch({ type: TYPES.CLEAR_CART });
+  };
   return (
     <Card className="glass-dark text-dark border-glass shadow gap-2 align-items-center justify-content-around">
       <Row className="mt-2">
@@ -67,7 +71,6 @@ const Shop = () => {
             </Button>
           </ButtonGroup>
         </Row>
-
         {items.map((item) => (
           <StoreItem key={item.id} data={item} addToCart={addToCart} />
         ))}
