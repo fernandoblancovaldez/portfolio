@@ -1,6 +1,7 @@
 import {
   ADD_TO_CART,
   CLEAR_CART,
+  READ_DATA,
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
 } from "../types";
@@ -67,6 +68,9 @@ export const initialState = {
 
 export function shopReducer(state = initialState, action) {
   switch (action.type) {
+    case READ_DATA: {
+      return { ...state, items: action.payload };
+    }
     case ADD_TO_CART: {
       let newItem = state.items.find((item) => item.id === action.payload);
       let itemInCart = state.cart.find((item) => item.id === newItem.id);
@@ -104,7 +108,7 @@ export function shopReducer(state = initialState, action) {
       };
     }
     case CLEAR_CART: {
-      return initialState;
+      return { ...state, cart: [] };
     }
     default:
       return state;

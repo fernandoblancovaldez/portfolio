@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const useFetch = (url) => {
+export const useFetch = (url, fetchOptions) => {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -9,11 +9,11 @@ export const useFetch = (url) => {
     const abortController = new AbortController(),
       signal = abortController.signal;
 
-    const fetchData = async (url) => {
+    const fetchData = async (url, fetchOptions) => {
       setLoading(true);
 
       try {
-        let res = await fetch(url);
+        let res = await fetch(url, fetchOptions);
 
         if (!res.ok) {
           let err = new Error("Error en la petición");
@@ -41,8 +41,8 @@ export const useFetch = (url) => {
       }
     };
 
-    fetchData(url);
-  }, [url]);
+    fetchData(url, fetchOptions);
+  }, [url, fetchOptions]);
 
   return { data, loading, error };
 };
