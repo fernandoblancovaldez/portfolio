@@ -38,23 +38,25 @@ const Shop = () => {
       ])
         .then((responses) => Promise.all(responses.map((res) => res.json())))
         .then((json) => {
-          //console.log(json);
           const fetchedItems = json[0].data.map((item) => {
             let { id, name, images } = item;
             return { id, name, url: images[0] };
           });
           const fetchedPrices = json[1].data.map((item) => {
-            let { product, currency, unit_amount } = item;
-            return { id: product, price: unit_amount, currency };
+            let { id, product, currency, unit_amount } = item;
+            return { product, amount: unit_amount, currency, price: id };
           });
-          //console.log(products, prices)
+
           const items = fetchedItems.map((item) => {
-            let itemPrice = fetchedPrices.filter((el) => el.id === item.id);
-            let { price, currency } = itemPrice[0];
+            let itemPrice = fetchedPrices.filter(
+              (el) => el.product === item.id
+            );
+            let { amount, currency, price } = itemPrice[0];
             let newItem = {
               ...item,
-              price,
+              amount,
               currency,
+              price,
             };
             return newItem;
           });
@@ -74,47 +76,6 @@ const Shop = () => {
   }, [dispatch]);
 
   console.log(items);
-
-  //console.log(data, loading, error);
-
-  /* const estado = {
-    items: {
-      storeItems: useFetch(itemsURL, fetchOptions),
-      storeItemsPrices: useFetch(pricesURL, fetchOptions),
-    },
-    cart: [],
-  };
-
-  console.log(estado); */
-  /* const storeItems = useFetch(itemsURL, fetchOptions);
-  const storeItemsPrices = useFetch(pricesURL, fetchOptions); */
-
-  /* useEffect(() => {
-    const readData = () => {
-      let storeItems, storeItemsPrices;
-      //const moneyFormat = (num) => `$${num.slice(0, -2)}.${num.slice(-2)}`;
-      Promise.all([
-        fetch("https://api.stripe.com/v1/products", fetchOptions),
-        fetch("https://api.stripe.com/v1/prices", fetchOptions),
-      ])
-        .then((responses) => Promise.all(responses.map((res) => res.json())))
-        .then((json) => {
-          storeItems = json[0].data;
-          storeItemsPrices = json[1].data;
-          console.log(storeItems, storeItemsPrices);
-          dispatch(json);
-        })
-        .catch((err) => {
-          //console.log(err);
-          let message =
-            err.statusText ||
-            "Ocurrió un error al conectarse con el API de Stripe";
-          console.log(`<p>Error ${err.status}: ${message}</p>`);
-        });
-    };
-
-    readData();
-  }, [dispatch]); */
 
   return (
     <Card className="glass-dark text-dark border-glass shadow gap-2 align-items-center justify-content-around">

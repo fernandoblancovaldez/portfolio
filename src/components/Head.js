@@ -10,13 +10,13 @@ function Head() {
     <header className="sticky-top glass">
       <Navbar className="p-0 shadow" bg="transparent" expand="lg">
         <Container>
-          <LinkContainer exact to="/">
+          <LinkContainer exact to="/" replace>
             <Navbar.Brand className="my-1 mx-auto fs-4 fw-light text-dark">
               <b className="fw-semibold">fernando</b>
               <em>blanco</em>
             </Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle aria-controls="basic-navbar-nav " />
+          <Navbar.Toggle aria-controls="basic-navbar-nav" replace />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="flex-row justify-content-evenly ms-lg-auto">
               <LinkContainer exact to="/">
@@ -33,7 +33,7 @@ function Head() {
                   </svg>
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer exact to="/cv">
+              <LinkContainer exact to="/cv" replace>
                 <Nav.Link className="nav-icon bg-dark text-light text-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@ function Head() {
                   </svg>
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer exact to="/portfolio">
+              <LinkContainer exact to="/portfolio" replace>
                 <Nav.Link className="nav-icon bg-dark text-light text-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

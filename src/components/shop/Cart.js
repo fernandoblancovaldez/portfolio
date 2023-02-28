@@ -5,6 +5,8 @@ import CartItem from "./CartItem";
 import ListGroup from "react-bootstrap/ListGroup";
 import { useDispatch, useSelector } from "react-redux";
 import { delFromCart } from "../../actions/shopActions";
+import { STRIPE_KEYS } from "../../assets/STRIPE_KEYS.js";
+import Stripe from "https://js.stripe.com/v3/";
 
 function Cart() {
   const [show, setShow] = useState(false);
@@ -15,6 +17,22 @@ function Cart() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const handleSend = (cart) => {
+    let dataToSend = [];
+    cart.forEach((item) => {
+      let { price, quantity } = item;
+      dataToSend = [...dataToSend, { price, quantity }];
+    });
+
+    console.log(dataToSend);
+
+    Stripe(STRIPE_KEYS.public).redirectToCheckout({
+      lineItems: dataToSend,
+      mode: "subscription",
+      successUrl: "http://127.0.0.1:5500/assets/stripe-success.html",
+      cancelUrl: "http://127.0.0.1:5500/assets/stripe-cancel.html",
+    });
+  };
 
   return (
     <>
@@ -67,7 +85,9 @@ function Cart() {
           <Button variant="secondary" onClick={handleClose}>
             Volver
           </Button>
-          <Button variant="primary">Continuar</Button>
+          <Button variant="primary" onClick={() => handleSend(cart)}>
+            Continuar
+          </Button>
         </Modal.Footer>
       </Modal>
     </>

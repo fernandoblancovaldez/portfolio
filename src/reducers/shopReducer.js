@@ -64,6 +64,7 @@ export const initialState = {
     },
   ],
   cart: [],
+  dataToSend: [],
 };
 
 export function shopReducer(state = initialState, action) {

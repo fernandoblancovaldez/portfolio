@@ -6,7 +6,7 @@ import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 
 const CartItem = ({ data, delOneFromCart, delAllFromCart }) => {
-  let { name, id, price, url, quantity } = data;
+  let { name, id, amount, url, quantity } = data;
   return (
     <ListGroup.Item className="d-flex align-items-center gap-2 py-2">
       <Image style={{ width: "5rem" }} rounded src={url} alt={name} />
@@ -17,7 +17,7 @@ const CartItem = ({ data, delOneFromCart, delAllFromCart }) => {
         </Row>
         <Row>
           <small className="lh-sm mb-1">
-            ${price}.00 x {quantity} = $ {price * quantity}.00
+            ${amount}.00 x {quantity} = $ {amount * quantity}.00
           </small>
         </Row>
         <Row>
