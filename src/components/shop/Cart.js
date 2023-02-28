@@ -5,7 +5,7 @@ import CartItem from "./CartItem";
 import ListGroup from "react-bootstrap/ListGroup";
 import { useDispatch, useSelector } from "react-redux";
 import { delFromCart } from "../../actions/shopActions";
-import { STRIPE_KEYS } from "../../assets/STRIPE_KEYS.js";
+//import { STRIPE_KEYS } from "../../assets/STRIPE_KEYS.js";
 //import Stripe from "https://js.stripe.com/v3/";
 
 function Cart() {
