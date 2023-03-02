@@ -75,7 +75,7 @@ const Shop = () => {
     getData();
   }, [dispatch]);
 
-  console.log(items);
+  //console.log(items);
 
   return (
     <Card className="glass-dark text-dark border-glass shadow gap-2 align-items-center justify-content-around">

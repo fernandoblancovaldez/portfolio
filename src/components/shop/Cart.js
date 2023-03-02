@@ -5,8 +5,10 @@ import CartItem from "./CartItem";
 import ListGroup from "react-bootstrap/ListGroup";
 import { useDispatch, useSelector } from "react-redux";
 import { delFromCart } from "../../actions/shopActions";
-//import { STRIPE_KEYS } from "../../assets/STRIPE_KEYS.js";
-//import Stripe from "https://js.stripe.com/v3/";
+import { loadStripe } from "@stripe/stripe-js";
+import { STRIPE_KEYS } from "../../assets/STRIPE_KEYS.js";
+
+const stripePromise = loadStripe(STRIPE_KEYS.public);
 
 function Cart() {
   const [show, setShow] = useState(false);
@@ -17,21 +19,24 @@ function Cart() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handleSend = (cart) => {
+
+  const handleSend = async (cart) => {
+    const stripe = await stripePromise;
     let dataToSend = [];
+
     cart.forEach((item) => {
       let { price, quantity } = item;
       dataToSend = [...dataToSend, { price, quantity }];
     });
 
-    console.log(dataToSend);
+    //console.log(dataToSend);
 
-    /* Stripe(STRIPE_KEYS.public).redirectToCheckout({
+    stripe.redirectToCheckout({
       lineItems: dataToSend,
       mode: "subscription",
-      successUrl: "http://127.0.0.1:5500/assets/stripe-success.html",
-      cancelUrl: "http://127.0.0.1:5500/assets/stripe-cancel.html",
-    }); */
+      successUrl: "https://cvfernandoblanco2023.netlify.app/#/gracias",
+      cancelUrl: "https://cvfernandoblanco2023.netlify.app/#/portfolio",
+    });
   };
 
   return (
