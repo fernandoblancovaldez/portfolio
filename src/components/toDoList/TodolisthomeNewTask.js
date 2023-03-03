@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
 
-import firebaseApp from "../helpers/toDoListCreds";
+import firebaseApp from "../../helpers/toDoListCreds";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 const firestore = getFirestore(firebaseApp);

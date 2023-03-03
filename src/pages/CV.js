@@ -1,6 +1,6 @@
-import Profile from "../components/Profile";
-import Skills from "../components/Skills";
-import XP from "../components/XP";
+import Profile from "../components/cv/Profile";
+import Skills from "../components/cv/Skills";
+import XP from "../components/cv/XP";
 
 const CV = () => {
   return (

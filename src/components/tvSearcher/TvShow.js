@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
-function Show({ name, text, img, url }) {
+function TvShow({ name, text, img, url }) {
   return (
     <Card style={{ width: "14rem" }} className="p-0 shadow">
       <Card.Img variant="top" src={img} alt={name} />
@@ -24,4 +24,4 @@ function Show({ name, text, img, url }) {
   );
 }
 
-export default Show;
+export default TvShow;

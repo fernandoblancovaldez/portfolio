@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import ToDoListHome from "./ToDoListHome";
 import ToDoListLogg from "./ToDoListLogg";
-import firebaseApp from "../helpers/toDoListCreds";
+import firebaseApp from "../../helpers/toDoListCreds";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 const auth = getAuth(firebaseApp);
 

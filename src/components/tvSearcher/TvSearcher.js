@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import Loader from "./Loader";
-import Show from "./Show";
+import Loader from "../Loader";
+import TvShow from "./TvShow";
 
 const TvSearcher = () => {
   const [inputData, setInputData] = useState("");
@@ -84,7 +84,7 @@ const TvSearcher = () => {
         {shows &&
           !loading &&
           shows.map((show) => (
-            <Show
+            <TvShow
               key={show.key}
               name={show.name}
               text={show.text}

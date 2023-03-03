@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { useFetch } from "../hooks/useFetch";
-import getLocation from "../helpers/getLocation";
+import { useFetch } from "../../hooks/useFetch";
+import getLocation from "../../helpers/getLocation";
 
 const Weather = () => {
   const [inputText, setInputText] = useState("");

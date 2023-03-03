@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import TodolisthomeNewTask from "./TodolisthomeNewTask";
 import TodolisthomeTaskList from "./TodolisthomeTaskList";
-import firebaseApp from "../helpers/toDoListCreds";
+import firebaseApp from "../../helpers/toDoListCreds";
 import { getAuth, signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { Button, Container } from "react-bootstrap";

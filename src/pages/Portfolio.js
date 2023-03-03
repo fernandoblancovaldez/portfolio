@@ -1,8 +1,8 @@
 import Accordion from "react-bootstrap/Accordion";
+import TvSearcher from "../components/tvSearcher/TvSearcher";
+import Weather from "../components/weather/Weather";
+import ToDoList from "../components/toDoList/ToDoList";
 import Shop from "../components/shop/Shop";
-import ToDoList from "../components/ToDoList";
-import TvSearcher from "../components/TvSearcher";
-import Weather from "../components/Weather";
 
 function Portfolio() {
   return (
