@@ -32,7 +32,7 @@ const Shop = () => {
     const getData = async () => {
       //ssetLoading(true);
 
-      Promise.all([
+      await Promise.all([
         fetch(itemsURL, fetchOptions),
         fetch(pricesURL, fetchOptions),
       ])
@@ -43,18 +43,28 @@ const Shop = () => {
             return { id, name, url: images[0] };
           });
           const fetchedPrices = json[1].data.map((item) => {
-            let { id, product, currency, unit_amount } = item;
-            return { product, amount: unit_amount, currency, price: id };
+            let { id, product, currency, unit_amount_decimal } = item;
+            return {
+              product,
+              amount: unit_amount_decimal,
+              currency,
+              price: id,
+            };
           });
 
           const items = fetchedItems.map((item) => {
+            const moneyFormat = (num, currency) =>
+              `$${num.slice(0, -2)}.${num.slice(-2)} ${currency}`;
+
             let itemPrice = fetchedPrices.filter(
               (el) => el.product === item.id
             );
             let { amount, currency, price } = itemPrice[0];
+            let fullPrice = moneyFormat(amount, currency);
             let newItem = {
               ...item,
               amount,
+              fullPrice,
               currency,
               price,
             };
@@ -75,7 +85,7 @@ const Shop = () => {
     getData();
   }, [dispatch]);
 
-  //console.log(items);
+  console.log(items);
 
   return (
     <Card className="glass-dark text-dark border-glass shadow gap-2 align-items-center justify-content-around">
@@ -94,7 +104,7 @@ const Shop = () => {
         </Col>
       </Row>
 
-      <Row className="gap-1 container align-items-center justify-content-around">
+      <Row className="gap-3 container align-items-center justify-content-around">
         <Row className="justify-content-center">
           <ButtonGroup
             aria-label="First group"
@@ -108,11 +118,11 @@ const Shop = () => {
                 width="24"
                 height="24"
                 fill="currentColor"
-                class="bi bi-arrow-clockwise"
+                className="bi bi-arrow-clockwise"
                 viewBox="0 0 16 16"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"
                 />
                 <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />

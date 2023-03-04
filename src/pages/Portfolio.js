@@ -7,7 +7,7 @@ import Shop from "../components/shop/Shop";
 function Portfolio() {
   return (
     <div className="container m-sm-0 min-vh-100 d-flex flex-column justify-content-center">
-      <Accordion /* defaultActiveKey="0" */ flush>
+      <Accordion flush className="px-0 px-md-2rem">
         <Accordion.Item eventKey="0">
           <Accordion.Header>
             <li className="fw-semibold">Buscador de series</li>
@@ -20,7 +20,7 @@ function Portfolio() {
           <Accordion.Header>
             <li className="fw-semibold">App del Clima</li>
           </Accordion.Header>
-          <Accordion.Body>
+          <Accordion.Body className="px-0 px-md-2rem">
             <Weather />
           </Accordion.Body>
         </Accordion.Item>
@@ -28,7 +28,7 @@ function Portfolio() {
           <Accordion.Header>
             <li className="fw-semibold">To-Do List</li>
           </Accordion.Header>
-          <Accordion.Body>
+          <Accordion.Body className="px-0 px-md-2rem">
             <ToDoList />
           </Accordion.Body>
         </Accordion.Item>
@@ -36,7 +36,7 @@ function Portfolio() {
           <Accordion.Header>
             <li className="fw-semibold">Carrito de Compras</li>
           </Accordion.Header>
-          <Accordion.Body>
+          <Accordion.Body className="px-0 px-md-2rem">
             <Shop />
           </Accordion.Body>
         </Accordion.Item>

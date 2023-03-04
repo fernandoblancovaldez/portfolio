@@ -60,7 +60,7 @@ const TvSearcher = () => {
   };
 
   return (
-    <Card body className="glass">
+    <Card body className="bg-transparent border-glass">
       <form onSubmit={handleSubmit}>
         <Row>
           <Col>
@@ -69,7 +69,7 @@ const TvSearcher = () => {
               type="search"
               id="search"
               placeholder="Buscar shows de tv..."
-              autocomplete="off"
+              autoComplete="off"
               onChange={handleChange}
               /* value={inputData} */
             />

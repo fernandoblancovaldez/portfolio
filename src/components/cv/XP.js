@@ -26,8 +26,9 @@ function XP() {
                   (Backbone, jQuery, Underscore), HTML y CSS.
                 </small>
               </li>
-
-              <p className="text-muted">www.budgetmatador.com</p>
+              <small>
+                <p className="text-muted">www.budgetmatador.com</p>
+              </small>
             </ul>
           </p>
         </Col>
@@ -59,7 +60,6 @@ function XP() {
             , <em>Estonian Athletic Association</em>, Tallinn, Estonia
             <ul>
               <li>
-                {" "}
                 <small>
                   Trabajé como asistente organizador durante varios eventos de
                   pista y campo.

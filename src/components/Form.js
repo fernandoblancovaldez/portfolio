@@ -5,7 +5,7 @@ const Form = () => {
   return (
     <Card
       body
-      className="text-center  d-flex flex-column justify-content-center align-items-center glass "
+      className="text-center  d-flex flex-column justify-content-center align-items-center bg-transparent border-glass "
     >
       <form
         action="https://formsubmit.co/fernandoblancovaldez@gmail.com"

@@ -142,6 +142,12 @@
   transition: all 0.3s ease 0s;
 }
 
+/* father must have flex wrap: wrap or ve a row in react */
+.fluid-card {
+  flex: 1 1 10rem;
+  object-fit: contain;
+}
+
 .navbar-toggler {
   border: 0;
 }

@@ -17,7 +17,7 @@ const ToDoList = () => {
     }
   });
   return (
-    <Card className="glass text-secondary border-glass shadow py-3 gap-3 text-center align-items-center mx-auto">
+    <Card className="bg-transparent  text-secondary border-glass shadow py-3 gap-3 text-center align-items-center mx-auto">
       {globalUser ? (
         <ToDoListHome userEmail={globalUser.email} />
       ) : (
