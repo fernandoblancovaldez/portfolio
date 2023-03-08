@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Badge from "react-bootstrap/Badge";
+import Col from "react-bootstrap/Col";
 import CartItem from "./CartItem";
 import ListGroup from "react-bootstrap/ListGroup";
 import { useDispatch, useSelector } from "react-redux";
@@ -71,11 +72,16 @@ function Cart() {
               variant="dark"
               onClick={() => setShow(true)}
             >
-              <Cart2 size="1.5rem" />
-              <Badge pill bg="danger" disabled>
+              <Badge
+                pill
+                bg="danger"
+                className="position-absolute top-0 start-0 translate-middle border border-light"
+              >
                 {cart.length}
               </Badge>
+              <Cart2 size="1.5rem" />
             </Button>
+
             <Button
               className="d-flex justify-content-center align-items-center"
               variant="secondary"
@@ -137,13 +143,15 @@ function Cart() {
               ))
             )}
           </ListGroup>
-          {error && (
-            <Alert variant="danger" className="text-center">
-              {error}
-            </Alert>
-          )}
         </Modal.Body>
         <Modal.Footer>
+          {error && (
+            <Col className="col-12">
+              <Alert variant="danger" className="text-center">
+                {error}
+              </Alert>
+            </Col>
+          )}
           {loading && <Loader />}
           <Button
             variant="secondary"
