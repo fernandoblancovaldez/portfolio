@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Badge from "react-bootstrap/Badge";
-import Col from "react-bootstrap/Col";
-import CartItem from "./CartItem";
-import ListGroup from "react-bootstrap/ListGroup";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, clearCart, delFromCart } from "../../actions/shopActions";
+import { clearCart } from "../../actions/shopActions";
 import { loadStripe } from "@stripe/stripe-js";
 import { STRIPE_KEYS } from "../../assets/STRIPE_KEYS.js";
+import CartItem from "./CartItem";
+import Loader from "../Loader";
+import Alert from "react-bootstrap/Alert";
+import Badge from "react-bootstrap/Badge";
+import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Col from "react-bootstrap/Col";
+import ListGroup from "react-bootstrap/ListGroup";
+import Modal from "react-bootstrap/Modal";
 import {
   BoxArrowLeft,
   CheckAll,
@@ -17,8 +19,6 @@ import {
   Receipt,
   ArrowClockwise,
 } from "react-bootstrap-icons";
-import Loader from "../Loader";
-import Alert from "react-bootstrap/Alert";
 
 const stripePromise = loadStripe(STRIPE_KEYS.public);
 
@@ -132,15 +132,7 @@ function Cart() {
             {cart.length < 1 ? (
               <p className="m-0">😺 invitame la cena por favor, miau</p>
             ) : (
-              cart.map((item) => (
-                <CartItem
-                  key={item.id}
-                  data={item}
-                  addToCart={() => dispatch(addToCart(item.id))}
-                  delOneFromCart={() => dispatch(delFromCart(item.id))}
-                  delAllFromCart={() => dispatch(delFromCart(item.id, true))}
-                />
-              ))
+              cart.map((item) => <CartItem key={item.id} data={item} />)
             )}
           </ListGroup>
         </Modal.Body>

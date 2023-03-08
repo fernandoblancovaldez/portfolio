@@ -1,6 +1,7 @@
 import {
   ADD_TO_CART,
   CLEAR_CART,
+  CLEAR_SHOP,
   READ_DATA,
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
@@ -14,12 +15,16 @@ export const initialState = {
 export function shopReducer(state = initialState, action) {
   switch (action.type) {
     case READ_DATA: {
-      const fetchedItems = action.payload[0].data.map((item) => {
-        let { id, name, images } = item;
+      const products = action.payload[0];
+      const prices = action.payload[1];
+
+      const productsData = products.data.map((product) => {
+        let { id, name, images } = product;
         return { id, name, url: images[0] };
       });
-      const fetchedPrices = action.payload[1].data.map((item) => {
-        let { id, product, currency, unit_amount_decimal } = item;
+
+      const pricesData = prices.data.map((price) => {
+        let { id, product, currency, unit_amount_decimal } = price;
         return {
           product,
           amount: unit_amount_decimal,
@@ -28,27 +33,29 @@ export function shopReducer(state = initialState, action) {
         };
       });
 
-      const items = fetchedItems.map((item) => {
+      const items = productsData.map((productData) => {
         const moneyFormat = (num, currency) =>
           `$${num.slice(0, -2)}.${num.slice(-2)} ${currency}`;
 
-        let itemPrice = fetchedPrices.filter((el) => el.product === item.id);
+        let itemPrice = pricesData.filter(
+          (priceData) => priceData.product === productData.id
+        );
         let { amount, currency, price } = itemPrice[0];
 
         let fullPrice = moneyFormat(amount, currency);
 
-        let newItem = {
-          ...item,
+        let item = {
+          ...productData,
           amount,
           fullPrice,
           currency,
           price,
         };
-        return newItem;
+        return item;
       });
 
       //console.log(items);
-      return { ...state, items };
+      return { ...state, items: [...items] };
     }
     case ADD_TO_CART: {
       let newItem = state.items.find((item) => item.id === action.payload);
@@ -88,6 +95,9 @@ export function shopReducer(state = initialState, action) {
     }
     case CLEAR_CART: {
       return { ...state, cart: [] };
+    }
+    case CLEAR_SHOP: {
+      return initialState;
     }
     default:
       return state;

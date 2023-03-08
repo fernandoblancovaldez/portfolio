@@ -1,8 +1,11 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { PlusCircleFill } from "react-bootstrap-icons";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../actions/shopActions";
 
-const StoreItem = ({ data, addToCart }) => {
+const StoreItem = ({ data }) => {
+  const dispatch = useDispatch();
   let { name, id, fullPrice, url } = data;
 
   return (
@@ -23,7 +26,7 @@ const StoreItem = ({ data, addToCart }) => {
         </Card.Text>
         <Button
           className="btn btn-success btn-sm d-flex justify-content-center align-items-center"
-          onClick={() => addToCart(id)}
+          onClick={() => dispatch(addToCart(id))}
         >
           <PlusCircleFill size="1rem" />
         </Button>

@@ -5,7 +5,7 @@ import XP from "../components/cv/XP";
 const CV = () => {
   return (
     <>
-      <section className="min-vh-100 d-flex flex-column justify-content-center align-items-center">
+      <section className="container my-5 d-flex flex-column justify-content-center align-items-center">
         <Profile />
       </section>
 

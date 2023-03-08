@@ -8,7 +8,7 @@ import StoreItem from "./StoreItem";
 import Image from "react-bootstrap/Image";
 import Ulises from "../../assets/shop-ulises.jpeg";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, readData } from "../../actions/shopActions";
+import { clearShop, readData } from "../../actions/shopActions";
 import { STRIPE_KEYS } from "../../assets/STRIPE_KEYS.js";
 import Loader from "../Loader";
 
@@ -29,8 +29,6 @@ const Shop = () => {
     };
 
     const getData = () => {
-      setLoading(true);
-
       Promise.all([
         fetch(itemsURL, fetchOptions),
         fetch(pricesURL, fetchOptions),
@@ -46,8 +44,12 @@ const Shop = () => {
         })
         .finally(() => setLoading(false));
     };
-
     getData();
+
+    return () => {
+      setError(null);
+      dispatch(clearShop());
+    };
   }, [dispatch]);
 
   return (
@@ -78,11 +80,7 @@ const Shop = () => {
         )}
         {loading && <Loader />}
         {items.map((item) => (
-          <StoreItem
-            key={item.id}
-            data={item}
-            addToCart={() => dispatch(addToCart(item.id))}
-          />
+          <StoreItem key={item.id} data={item} />
         ))}
       </Row>
     </Card>

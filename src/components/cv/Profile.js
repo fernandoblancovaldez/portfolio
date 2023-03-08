@@ -4,15 +4,15 @@ function Profile() {
   return (
     <Card
       body
-      className="text-center bg-transparent border-glass w-75 fs-6 my-font fw-semibold  pb-0"
+      className="text-center bg-transparent border-glass fs-6 my-font fw-semibold  pb-0"
     >
-      Profesional independiente, proactivo y autodidacta que se desenvuelve en
-      el área de desarrollo web.
+      Profesional independiente y autodidacta que se desenvuelve en el área de
+      desarrollo web.
       <br />
       <br />
       <blockquote className="mb-0">
         <p className="fw-light">
-          Busco continuamente incorporar nuevas tecnologías que permitan
+          Busco continuamente incorporar nuevas tecnologías que me permitan
           optimizar el trabajo del día a día.
         </p>
         <br />

@@ -14,23 +14,30 @@ function Skills() {
         <Col>
           <b className="fw-semibold">En programación</b>
           <ul>
-            <li>C#</li>
-            <li>C++</li>
             <li>JavaScript</li>
-            <li>PHP</li>
+            <li>React JS</li>
+            <li>Redux</li>
+            <li>Context API</li>
+            <li>Ajax</li>
+            <li>Fetch</li>
             <li>HTML</li>
             <li>CSS</li>
-            <li>Visual Basic</li>
+            <li>
+              Firebase (<em>backend as a service</em>)
+            </li>
+            <li>Bootstrap</li>
+            <li>Git</li>
+            <li>GitHub</li>
           </ul>
         </Col>
         <Col>
           <b className="fw-semibold">Informaticas</b>
           <ul>
-            <li>3D Studio Max</li>
-            <li>Adobe After Effects</li>
+            <li>MS Office</li>
+            <li>MS Office 360</li>
             <li>Adobe Illustrator</li>
             <li>Adobe Photoshop</li>
-            <li>Adobe Premiere</li>
+            <li>Adobe Lightroom</li>
             <li>CorelDRAW</li>
           </ul>
         </Col>
@@ -38,9 +45,7 @@ function Skills() {
           <b className="fw-semibold">En Idiomas</b>
           <ul>
             <li>Inglés</li>
-            <li>Alemán</li>
-            <li>Ruso</li>
-            <li>Estonio</li>
+            <li>Portugues</li>
           </ul>
         </Col>
       </Row>

@@ -7,8 +7,11 @@ import Row from "react-bootstrap/Row";
 import { Dash } from "react-bootstrap-icons";
 import { Plus } from "react-bootstrap-icons";
 import { XCircleFill } from "react-bootstrap-icons";
+import { useDispatch } from "react-redux";
+import { delFromCart, addToCart } from "../../actions/shopActions";
 
-const CartItem = ({ data, addToCart, delOneFromCart, delAllFromCart }) => {
+const CartItem = ({ data }) => {
+  const dispatch = useDispatch();
   let { name, id, url, fullPrice, quantity } = data;
   return (
     <ListGroup.Item className="d-flex gap-2 col-12 align-items-center justify-content-between py-2">
@@ -37,21 +40,21 @@ const CartItem = ({ data, addToCart, delOneFromCart, delAllFromCart }) => {
             <Button
               variant="secondary"
               className="d-flex justify-content-center align-items-center"
-              onClick={() => delOneFromCart(id)}
+              onClick={() => dispatch(delFromCart(id))}
             >
               <Dash />
             </Button>
             <Button
               variant="secondary"
               className="d-flex justify-content-center align-items-center"
-              onClick={() => addToCart(id)}
+              onClick={() => dispatch(addToCart(id))}
             >
               <Plus />
             </Button>
             <Button
               variant="danger"
               className="d-flex justify-content-center align-items-center"
-              onClick={() => delAllFromCart(id, true)}
+              onClick={() => dispatch(delFromCart(id, true))}
             >
               <XCircleFill />
             </Button>
