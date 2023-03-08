@@ -112,7 +112,6 @@
 }
 
 .glass-dark {
-  backdrop-filter: blur(1rem);
   background-color: rgba(194, 187, 205, 0.2);
 
   border: 1px solid transparent;
@@ -142,7 +141,7 @@
   transition: all 0.3s ease 0s;
 }
 
-/* father must have flex wrap: wrap or ve a row in react */
+/* father must have flex wrap: wrap or be a bootstrap row component */
 .fluid-card {
   flex: 1 1 10rem;
   object-fit: contain;

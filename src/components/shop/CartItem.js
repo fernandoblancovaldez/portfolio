@@ -4,8 +4,11 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
+import { Dash } from "react-bootstrap-icons";
+import { Plus } from "react-bootstrap-icons";
+import { XCircleFill } from "react-bootstrap-icons";
 
-const CartItem = ({ data, delOneFromCart, delAllFromCart }) => {
+const CartItem = ({ data, addToCart, delOneFromCart, delAllFromCart }) => {
   let { name, id, url, fullPrice, quantity } = data;
   return (
     <ListGroup.Item className="d-flex gap-2 col-12 align-items-center justify-content-between py-2">
@@ -29,16 +32,28 @@ const CartItem = ({ data, delOneFromCart, delAllFromCart }) => {
           <ButtonGroup
             aria-label="First group"
             size="sm"
-            style={{ width: "10rem" }}
+            style={{ width: "5rem" }}
           >
-            <Button variant="secondary" onClick={() => delOneFromCart(id)}>
-              -1
+            <Button
+              variant="secondary"
+              className="d-flex justify-content-center align-items-center"
+              onClick={() => delOneFromCart(id)}
+            >
+              <Dash />
             </Button>
             <Button
               variant="secondary"
+              className="d-flex justify-content-center align-items-center"
+              onClick={() => addToCart(id)}
+            >
+              <Plus />
+            </Button>
+            <Button
+              variant="danger"
+              className="d-flex justify-content-center align-items-center"
               onClick={() => delAllFromCart(id, true)}
             >
-              Quitar item
+              <XCircleFill />
             </Button>
           </ButtonGroup>
         </Row>

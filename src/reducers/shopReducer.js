@@ -7,70 +7,48 @@ import {
 } from "../types";
 
 export const initialState = {
-  items: [
-    {
-      id: 1,
-      price: "100",
-      name: "Producto 1",
-      url: "https://picsum.photos/420",
-    },
-    {
-      id: 2,
-      price: "200",
-      name: "Producto 2",
-      url: "https://picsum.photos/420",
-    },
-    {
-      id: 3,
-      price: "300",
-      name: "Producto 3",
-      url: "https://picsum.photos/420",
-    },
-    {
-      id: 4,
-      price: "400",
-      name: "Producto 4",
-      url: "https://picsum.photos/420",
-    },
-    {
-      id: 5,
-      price: "500",
-      name: "Producto 5",
-      url: "https://picsum.photos/420",
-    },
-    {
-      id: 6,
-      price: "600",
-      name: "Producto 6",
-      url: "https://picsum.photos/420",
-    },
-    {
-      id: 7,
-      price: "700",
-      name: "Producto 7",
-      url: "https://picsum.photos/420",
-    },
-    {
-      id: 8,
-      price: "800",
-      name: "Producto 8",
-      url: "https://picsum.photos/420",
-    },
-    {
-      id: 9,
-      price: "900",
-      name: "Producto 9",
-      url: "https://picsum.photos/420",
-    },
-  ],
+  items: [],
   cart: [],
-  dataToSend: [],
 };
 
 export function shopReducer(state = initialState, action) {
   switch (action.type) {
     case READ_DATA: {
-      return { ...state, items: action.payload };
+      const fetchedItems = action.payload[0].data.map((item) => {
+        let { id, name, images } = item;
+        return { id, name, url: images[0] };
+      });
+      const fetchedPrices = action.payload[1].data.map((item) => {
+        let { id, product, currency, unit_amount_decimal } = item;
+        return {
+          product,
+          amount: unit_amount_decimal,
+          currency,
+          price: id,
+        };
+      });
+
+      const items = fetchedItems.map((item) => {
+        const moneyFormat = (num, currency) =>
+          `$${num.slice(0, -2)}.${num.slice(-2)} ${currency}`;
+
+        let itemPrice = fetchedPrices.filter((el) => el.product === item.id);
+        let { amount, currency, price } = itemPrice[0];
+
+        let fullPrice = moneyFormat(amount, currency);
+
+        let newItem = {
+          ...item,
+          amount,
+          fullPrice,
+          currency,
+          price,
+        };
+        return newItem;
+      });
+
+      //console.log(items);
+      return { ...state, items };
     }
     case ADD_TO_CART: {
       let newItem = state.items.find((item) => item.id === action.payload);

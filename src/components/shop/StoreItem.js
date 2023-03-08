@@ -1,11 +1,9 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { PlusCircleFill } from "react-bootstrap-icons";
 
 const StoreItem = ({ data, addToCart }) => {
   let { name, id, fullPrice, url } = data;
-  //console.log(amount, currency);
-  /* const moneyFormat = (num) =>
-    `$${num.slice(0, -2)}.${num.slice(-2)}${currency}`; */
 
   return (
     <Card className="p-0 border-glass fluid-card ">
@@ -23,8 +21,11 @@ const StoreItem = ({ data, addToCart }) => {
         <Card.Text className="lh-sm mb-1">
           <small>{fullPrice}</small>
         </Card.Text>
-        <Button className="btn btn-dark btn-sm" onClick={() => addToCart(id)}>
-          Agregar
+        <Button
+          className="btn btn-success btn-sm d-flex justify-content-center align-items-center"
+          onClick={() => addToCart(id)}
+        >
+          <PlusCircleFill size="1rem" />
         </Button>
       </Card.Body>
     </Card>

@@ -1,26 +1,37 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Badge from "react-bootstrap/Badge";
 import CartItem from "./CartItem";
 import ListGroup from "react-bootstrap/ListGroup";
 import { useDispatch, useSelector } from "react-redux";
-import { delFromCart } from "../../actions/shopActions";
+import { addToCart, clearCart, delFromCart } from "../../actions/shopActions";
 import { loadStripe } from "@stripe/stripe-js";
 import { STRIPE_KEYS } from "../../assets/STRIPE_KEYS.js";
+import {
+  BoxArrowLeft,
+  CheckAll,
+  Cart2,
+  Receipt,
+  ArrowClockwise,
+} from "react-bootstrap-icons";
+import Loader from "../Loader";
+import Alert from "react-bootstrap/Alert";
 
 const stripePromise = loadStripe(STRIPE_KEYS.public);
 
 function Cart() {
   const [show, setShow] = useState(false);
-
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(null);
   const { cart } = state.shop;
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
   const handleSend = async (cart) => {
+    setLoading(true);
+    setError(null);
     const stripe = await stripePromise;
     let dataToSend = [];
 
@@ -29,38 +40,76 @@ function Cart() {
       dataToSend = [...dataToSend, { price, quantity }];
     });
 
-    //console.log(dataToSend);
-
-    stripe.redirectToCheckout({
-      lineItems: dataToSend,
-      mode: "subscription",
-      successUrl: "https://cvfernandoblanco2023.netlify.app/#/gracias",
-      cancelUrl: "https://cvfernandoblanco2023.netlify.app/#/portfolio",
-    });
+    stripe
+      .redirectToCheckout({
+        lineItems: dataToSend,
+        mode: "subscription",
+        successUrl: "https://cvfernandoblanco2023.netlify.app/#/gracias",
+        cancelUrl: "https://cvfernandoblanco2023.netlify.app/#/portfolio",
+      })
+      .catch((err) => {
+        //console.log(err);
+        let message =
+          err.statusText ||
+          "Ocurrió un error al conectarse con el API de Stripe";
+        setError(message);
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
     <>
-      <Button
-        className="d-flex justify-content-center"
-        variant="dark"
-        onClick={handleShow}
+      <ButtonGroup
+        aria-label="First group"
+        size="sm"
+        style={{ width: "10rem" }}
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          fill="currentColor"
-          className="bi bi-cart4"
-          viewBox="0 0 16 16"
-        >
-          <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
-        </svg>
-      </Button>
+        {cart.length >= 1 ? (
+          <>
+            <Button
+              className="d-flex justify-content-center align-items-center"
+              variant="dark"
+              onClick={() => setShow(true)}
+            >
+              <Cart2 size="1.5rem" />
+              <Badge pill bg="danger" disabled>
+                {cart.length}
+              </Badge>
+            </Button>
+            <Button
+              className="d-flex justify-content-center align-items-center"
+              variant="secondary"
+              onClick={() => dispatch(clearCart())}
+            >
+              <ArrowClockwise size="1.5rem" />
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button
+              disabled
+              className="d-flex justify-content-center align-items-center"
+              variant="dark"
+            >
+              <Cart2 size="1.5rem" />
+            </Button>
+            <Button
+              disabled
+              className="d-flex justify-content-center align-items-center"
+              variant="secondary"
+            >
+              <ArrowClockwise size="1.5rem" />
+            </Button>
+          </>
+        )}
+      </ButtonGroup>
 
       <Modal
         show={show}
-        onHide={handleClose}
+        onHide={() => {
+          setShow(false);
+          setError(null);
+        }}
         backdrop="static"
         keyboard={false}
         className="bg-transparent"
@@ -68,31 +117,61 @@ function Cart() {
         scrollable
       >
         <Modal.Header closeButton>
-          <Modal.Title>Orden de compra</Modal.Title>
+          <Modal.Title>
+            <Receipt size="2rem" /> Orden de compra
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ListGroup className="align-items-center">
             {cart.length < 1 ? (
               <p className="m-0">😺 invitame la cena por favor, miau</p>
             ) : (
-              cart.map((item, index) => (
+              cart.map((item) => (
                 <CartItem
-                  key={index}
+                  key={item.id}
                   data={item}
+                  addToCart={() => dispatch(addToCart(item.id))}
                   delOneFromCart={() => dispatch(delFromCart(item.id))}
                   delAllFromCart={() => dispatch(delFromCart(item.id, true))}
                 />
               ))
             )}
           </ListGroup>
+          {error && (
+            <Alert variant="danger" className="text-center">
+              {error}
+            </Alert>
+          )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Volver
+          {loading && <Loader />}
+          <Button
+            variant="secondary"
+            className="d-flex justify-content-center align-items-center"
+            onClick={() => {
+              setShow(false);
+              setError(null);
+            }}
+          >
+            <BoxArrowLeft size="1.5rem" />
           </Button>
-          <Button variant="primary" onClick={() => handleSend(cart)}>
-            Continuar
-          </Button>
+          {cart.length >= 1 ? (
+            <Button
+              variant="success"
+              className="d-flex justify-content-center align-items-center"
+              onClick={() => handleSend(cart)}
+            >
+              <CheckAll size="1.5rem" />
+            </Button>
+          ) : (
+            <Button
+              variant="success"
+              className="d-flex justify-content-center align-items-center"
+              disabled
+            >
+              <CheckAll size="1.5rem" />
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
     </>
