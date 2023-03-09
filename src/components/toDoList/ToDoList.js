@@ -9,13 +9,8 @@ const auth = getAuth(firebaseApp);
 const ToDoList = () => {
   const [globalUser, setGlobalUser] = useState(null);
 
-  onAuthStateChanged(auth, (userFirebase) => {
-    if (userFirebase) {
-      setGlobalUser(userFirebase);
-    } else {
-      setGlobalUser(null);
-    }
-  });
+  onAuthStateChanged(auth, (userFirebase) => userFirebase ? setGlobalUser(userFirebase) : setGlobalUser(null));
+  
   return (
     <Card className="bg-transparent  text-secondary border-glass shadow py-3 gap-3 text-center align-items-center mx-auto">
       {globalUser ? (

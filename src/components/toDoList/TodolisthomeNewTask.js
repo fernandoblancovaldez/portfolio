@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Container, Form, Row, Col, Button } from "react-bootstrap";
+import { PlusCircleFill } from "react-bootstrap-icons";
 
 import firebaseApp from "../../helpers/toDoListCreds";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
@@ -54,28 +55,33 @@ const TodolisthomeNewTask = ({ tasks, userEmail, setArrTasks }) => {
     <Container>
       <Form onSubmit={handleAddTask}>
         <Row className="gap-2 align-items-center">
-          <Col className="col-12 col-lg-4">
+          <Col className="col-12 col-md-6 p-0">
             <Form.Control
               type="text"
               placeholder="Describe tu tarea"
               id="taskDescription"
+              required
             />
           </Col>
-          <Col className="col-8 col-lg-4">
+          <Col className="p-0">
             <Form.Control
               type="file"
               placeholder="Añade archivo"
               onChange={handleAddFile}
             />
           </Col>
-          <Col>
-            <Button type="submit" variant="dark">
-              Agregar tarea
+          <Col xs="auto" className="p-0 ms-auto">
+            <Button
+              type="submit"
+              size="sm"
+              variant="success"
+              className="d-flex mx-auto"
+            >
+              <PlusCircleFill size="1rem" />
             </Button>
           </Col>
         </Row>
       </Form>
-      <hr />
     </Container>
   );
 };

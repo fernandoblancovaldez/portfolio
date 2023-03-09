@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Col, Container, Row, Stack } from "react-bootstrap";
+import { XCircleFill, FileEarmarkFill } from "react-bootstrap-icons";
 
 import firebaseApp from "../../helpers/toDoListCreds";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
@@ -22,24 +23,29 @@ const TodolisthomeTaskList = ({ tasks, userEmail, setArrTasks }) => {
       <Stack className="gap-2">
         {tasks.map((task) => {
           return (
-            <Row key={task.id} className="align-items-center">
-              <Col>{task.description}</Col>
-              <Col>
+            <Row key={task.id} className="align-items-center gap-1">
+              <Col xs="auto">{task.description}</Col>
+              <Col xs="auto" className="p-0 ms-auto">
                 <a href={task.url} target="_BLANK" rel="noreferrer noopener">
-                  <Button variant="secondary" className=" btn-sm">
-                    Ver Archivo
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="d-flex mx-auto"
+                  >
+                    <FileEarmarkFill size="1rem" />
                   </Button>
                 </a>
               </Col>
-              <Col>
+              <Col xs="auto" className="p-0 ">
                 <Button
                   onClick={() => {
                     delTask(task.id);
                   }}
                   variant="danger"
-                  className=" btn-sm"
+                  size="sm"
+                  className="d-flex mx-auto"
                 >
-                  Eliminar Tarea
+                  <XCircleFill size="1rem" />
                 </Button>
               </Col>
             </Row>

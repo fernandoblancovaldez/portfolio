@@ -6,11 +6,16 @@ import firebaseApp from "../../helpers/toDoListCreds";
 import { getAuth, signOut } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { Button, Container } from "react-bootstrap";
+import Spinner from "react-bootstrap/Spinner";
+import Alert from "react-bootstrap/Alert";
+import { BoxArrowLeft } from "react-bootstrap-icons";
 const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
 
 const ToDoListHome = ({ userEmail }) => {
   const [arrTasks, setArrTasks] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const initialData = [
     {
@@ -54,8 +59,18 @@ const ToDoListHome = ({ userEmail }) => {
 
   useEffect(() => {
     const fetchTasks = async () => {
-      const tasks = await searchOrCreateDoc(userEmail);
+      setLoading(true);
+      setError(null);
+      const tasks = await searchOrCreateDoc(userEmail).catch((err) => {
+        console.log(err);
+        let message =
+          err.statusText ||
+          `Ocurrió un error, revisa tus datos e intenta nuevamente.`;
+        setError(message);
+        console.log(message);
+      });
       setArrTasks(tasks);
+      setLoading(false);
     };
 
     fetchTasks();
@@ -63,14 +78,24 @@ const ToDoListHome = ({ userEmail }) => {
 
   return (
     <Container>
-      <h4>Hola {userEmail.split("@")[0]}, sesion iniciada</h4>
-      <Button onClick={() => signOut(auth)}>Cerrar sesión</Button>
+      <h4 className="text-dark">Bienvenid@</h4>
+      <h3 className="text-dark hero-font">{userEmail.split("@")[0]}</h3>
+      <Button variant="secondary" size="sm" onClick={() => signOut(auth)}>
+        <BoxArrowLeft size="1.5rem" />
+      </Button>
       <hr />
       <TodolisthomeNewTask
         tasks={arrTasks}
         userEmail={userEmail}
         setArrTasks={setArrTasks}
       />
+      <hr />
+      {loading && <Spinner />}
+      {error && (
+        <Alert variant="danger" className="text-center mt-3 mb-0">
+          {error}
+        </Alert>
+      )}
       {arrTasks ? (
         <TodolisthomeTaskList
           tasks={arrTasks}
