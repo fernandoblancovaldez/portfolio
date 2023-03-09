@@ -57,6 +57,11 @@ const ToDoListLogg = () => {
     <div>
       <Container>
         <Stack className="gap-3">
+          {loading && (
+            <Row className="justify-content-center mt-3 mb-0">
+              <Spinner />
+            </Row>
+          )}
           <h1 className="text-dark">
             {userRegistering ? "Registrate" : "Inicia sesión"}
           </h1>
@@ -86,11 +91,7 @@ const ToDoListLogg = () => {
                 <DoorOpenFill size="1.5rem" />
               )}
             </Button>
-            {loading && (
-              <Row className="justify-content-center mt-3 mb-0">
-                <Spinner />
-              </Row>
-            )}
+
             {error && (
               <Alert variant="danger" className="text-center mt-3 mb-0">
                 {error}

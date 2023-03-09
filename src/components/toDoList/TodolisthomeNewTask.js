@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Form, Row, Col, Button } from "react-bootstrap";
+import { Container, Form, Row, Col, Button, Spinner } from "react-bootstrap";
 import { PlusCircleFill } from "react-bootstrap-icons";
 
 import firebaseApp from "../../helpers/toDoListCreds";
@@ -9,21 +9,31 @@ const firestore = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
 const TodolisthomeNewTask = ({ tasks, userEmail, setArrTasks }) => {
-  const [dwnldURL, setDwnldURL] = useState("https://picsum.photos/420");
+  const [fileName, setFileName] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleAddTask = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    let url;
+
+    if (fileName) {
+      //cargar archivo a firebase storage
+      const fileRef = ref(storage, `docs/${fileName}`);
+      await uploadBytes(fileRef, fileName);
+
+      //obtener url de descarga
+      url = await getDownloadURL(fileRef);
+    }
 
     //crear nueva tarea
     const description = e.target.taskDescription.value;
     const task = {
       id: +new Date(),
       description: description,
-      url: dwnldURL,
+      url,
+      fileName,
     };
-
-    //limpiar input
-    e.target.taskDescription.value = "";
 
     //crear nuevo array de tareas
     const newTasks = [...tasks, task];
@@ -34,21 +44,23 @@ const TodolisthomeNewTask = ({ tasks, userEmail, setArrTasks }) => {
 
     //actualizar state
     setArrTasks(newTasks);
-    await setDwnldURL("https://picsum.photos/420");
-    console.log(dwnldURL);
+    setFileName(null);
+    setLoading(false);
+    //console.log(dwnldURL);
+
+    //limpiar input
+    e.target.taskDescription.value = "";
+    e.target.taskFile.value = "";
   };
 
   const handleAddFile = async (e) => {
     //detectar archivo
     const localFile = e.target.files[0];
 
-    //cargarlo a firebase storage
-    const fileRef = ref(storage, `docs/${localFile.name}`);
-    await uploadBytes(fileRef, localFile);
+    //actualizar estado con nombre de archivo
+    setFileName(localFile.name);
 
-    //obtener url de descarga
-    await setDwnldURL(await getDownloadURL(fileRef));
-    console.log(dwnldURL);
+    //console.log(fileName);
   };
 
   return (
@@ -61,24 +73,49 @@ const TodolisthomeNewTask = ({ tasks, userEmail, setArrTasks }) => {
               placeholder="Describe tu tarea"
               id="taskDescription"
               required
+              size="sm"
             />
           </Col>
           <Col className="p-0">
-            <Form.Control
-              type="file"
-              placeholder="Añade archivo"
-              onChange={handleAddFile}
-            />
+            {loading ? (
+              <Form.Control
+                disabled
+                type="file"
+                placeholder="Añade archivo"
+                id="taskFile"
+                size="sm"
+              />
+            ) : (
+              <Form.Control
+                type="file"
+                placeholder="Añade archivo"
+                id="taskFile"
+                onChange={handleAddFile}
+                size="sm"
+              />
+            )}
           </Col>
           <Col xs="auto" className="p-0 ms-auto">
-            <Button
-              type="submit"
-              size="sm"
-              variant="success"
-              className="d-flex mx-auto"
-            >
-              <PlusCircleFill size="1rem" />
-            </Button>
+            {loading ? (
+              <Button
+                disabled
+                type="submit"
+                size="sm"
+                variant="success"
+                className="d-flex mx-auto"
+              >
+                <Spinner size="sm" />
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                size="sm"
+                variant="success"
+                className="d-flex mx-auto"
+              >
+                <PlusCircleFill size="1rem" />
+              </Button>
+            )}
           </Col>
         </Row>
       </Form>

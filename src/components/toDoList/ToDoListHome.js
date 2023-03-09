@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import TodolisthomeNewTask from "./TodolisthomeNewTask";
 import TodolisthomeTaskList from "./TodolisthomeTaskList";
@@ -17,50 +16,51 @@ const ToDoListHome = ({ userEmail }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const initialData = [
-    {
-      id: 1,
-      description: "Tarea falsa 1",
-      url: "https://picsum.photos/420",
-    },
-    {
-      id: 2,
-      description: "Tarea falsa 2",
-      url: "https://picsum.photos/420",
-    },
-    {
-      id: 3,
-      description: "Tarea falsa 3",
-      url: "https://picsum.photos/420",
-    },
-  ];
-
-  const searchOrCreateDoc = async (docId) => {
-    //crear referencia al documento
-    const refDoc = doc(firestore, `usuarios/${docId}`);
-
-    //buscar documento
-    const query = await getDoc(refDoc);
-
-    //revisar que exista el documento
-    if (query.exists()) {
-      //si existe
-
-      const docInfo = query.data();
-      return docInfo.tasks;
-    } else {
-      //si no existe
-      await setDoc(refDoc, { tasks: [...initialData] });
-      const query = await getDoc(refDoc);
-      const docInfo = query.data();
-      return docInfo.tasks;
-    }
-  };
-
   useEffect(() => {
     const fetchTasks = async () => {
       setLoading(true);
       setError(null);
+
+      const searchOrCreateDoc = async (docId) => {
+        const initialData = [
+          {
+            id: 1,
+            description: "Tarea falsa 1",
+            url: "https://picsum.photos/420",
+          },
+          {
+            id: 2,
+            description: "Tarea falsa 2",
+            url: "https://picsum.photos/420",
+          },
+          {
+            id: 3,
+            description: "Tarea falsa 3",
+            url: "https://picsum.photos/420",
+          },
+        ];
+
+        //crear referencia al documento
+        const refDoc = doc(firestore, `usuarios/${docId}`);
+
+        //buscar documento
+        const query = await getDoc(refDoc);
+
+        //revisar que exista el documento
+        if (query.exists()) {
+          //si existe
+
+          const docInfo = query.data();
+          return docInfo.tasks;
+        } else {
+          //si no existe
+          await setDoc(refDoc, { tasks: [...initialData] });
+          const query = await getDoc(refDoc);
+          const docInfo = query.data();
+          return docInfo.tasks;
+        }
+      };
+
       const tasks = await searchOrCreateDoc(userEmail).catch((err) => {
         console.log(err);
         let message =
@@ -74,10 +74,11 @@ const ToDoListHome = ({ userEmail }) => {
     };
 
     fetchTasks();
-  }, []);
+  }, [userEmail]);
 
   return (
     <Container>
+      {loading && <Spinner />}
       <h4 className="text-dark">Bienvenid@</h4>
       <h3 className="text-dark hero-font">{userEmail.split("@")[0]}</h3>
       <Button variant="secondary" size="sm" onClick={() => signOut(auth)}>
@@ -90,7 +91,6 @@ const ToDoListHome = ({ userEmail }) => {
         setArrTasks={setArrTasks}
       />
       <hr />
-      {loading && <Spinner />}
       {error && (
         <Alert variant="danger" className="text-center mt-3 mb-0">
           {error}

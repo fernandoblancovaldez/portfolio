@@ -1,22 +1,32 @@
-import React from "react";
-import { Button, Col, Container, Row, Stack } from "react-bootstrap";
+import React, { useState } from "react";
+import { Button, Col, Container, Row, Spinner, Stack } from "react-bootstrap";
 import { XCircleFill, FileEarmarkFill } from "react-bootstrap-icons";
 
 import firebaseApp from "../../helpers/toDoListCreds";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
+import { getStorage, ref, deleteObject } from "firebase/storage";
 const firestore = getFirestore(firebaseApp);
+const storage = getStorage(firebaseApp);
 
 const TodolisthomeTaskList = ({ tasks, userEmail, setArrTasks }) => {
-  const delTask = async (id) => {
+  const [loading, setLoading] = useState(false);
+
+  const delTask = async (id, fileName) => {
+    setLoading(true);
     //crear nuevo array de tareas
     const newTasks = tasks.filter((task) => task.id !== id);
 
     //actualizar base de datos
     const refDoc = doc(firestore, `usuarios/${userEmail}`);
-    updateDoc(refDoc, { tasks: [...newTasks] });
+    await updateDoc(refDoc, { tasks: [...newTasks] });
+
+    //eliminar archivo del store
+    const fileRef = ref(storage, `docs/${fileName}`);
+    await deleteObject(fileRef);
 
     //actualizar state
     setArrTasks(newTasks);
+    setLoading(false);
   };
   return (
     <Container>
@@ -24,29 +34,46 @@ const TodolisthomeTaskList = ({ tasks, userEmail, setArrTasks }) => {
         {tasks.map((task) => {
           return (
             <Row key={task.id} className="align-items-center gap-1">
-              <Col xs="auto">{task.description}</Col>
+              <Col xs="auto" className="text-dark">
+                <li>{task.description}</li>
+              </Col>
+
               <Col xs="auto" className="p-0 ms-auto">
-                <a href={task.url} target="_BLANK" rel="noreferrer noopener">
+                {task.url && (
+                  <a href={task.url} target="_BLANK" rel="noreferrer noopener">
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      className="d-flex mx-auto"
+                    >
+                      <FileEarmarkFill size="1rem" />
+                    </Button>
+                  </a>
+                )}
+              </Col>
+
+              <Col xs="auto" className="p-0">
+                {loading ? (
                   <Button
-                    variant="secondary"
+                    disabled
+                    variant="danger"
                     size="sm"
                     className="d-flex mx-auto"
                   >
-                    <FileEarmarkFill size="1rem" />
+                    <Spinner size="sm" />
                   </Button>
-                </a>
-              </Col>
-              <Col xs="auto" className="p-0 ">
-                <Button
-                  onClick={() => {
-                    delTask(task.id);
-                  }}
-                  variant="danger"
-                  size="sm"
-                  className="d-flex mx-auto"
-                >
-                  <XCircleFill size="1rem" />
-                </Button>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      delTask(task.id, task.fileName);
+                    }}
+                    variant="danger"
+                    size="sm"
+                    className="d-flex mx-auto"
+                  >
+                    <XCircleFill size="1rem" />
+                  </Button>
+                )}
               </Col>
             </Row>
           );
