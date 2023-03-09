@@ -14,7 +14,7 @@ function XP() {
         <Col>
           <p>
             <b className="fw-semibold">
-              03/2020 - presente, Front-end desarrollador
+              03/2022 - presente, Front-end desarrollador
             </b>
             , <em>modalidad Freelance</em>
             <br />
@@ -85,7 +85,7 @@ function XP() {
             <br />
             <small>
               Proyecto de mi autoría el cual consistía en el envío masivo de SMS
-              con el objetivo de publicitar diversas marcas (de concecionarias
+              con el objetivo de publicitar diversas marcas (de concesionarias
               automotrices, de empresas crediticias, de obras sociales prepagas,
               etc) y a su vez de receptar el feedback obtenido (es decir, los
               contactos de quien haya reaccionado positivamente a los SMS) para,
