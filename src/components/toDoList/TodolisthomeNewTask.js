@@ -9,28 +9,29 @@ const firestore = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
 const TodolisthomeNewTask = ({ tasks, userEmail, setArrTasks }) => {
-  const [fileName, setFileName] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleAddTask = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const description = e.target.taskDescription.value;
+    const localFile = e.target.taskFile.files[0];
+    const fileName = e.target.taskFile.files[0].name;
     let url;
 
-    if (fileName) {
-      //cargar archivo a firebase storage
+    if (localFile) {
+      //cargar archivo a firebase storage si es que existe tal archivo
       const fileRef = ref(storage, `docs/${fileName}`);
-      await uploadBytes(fileRef, fileName);
+      await uploadBytes(fileRef, localFile);
 
       //obtener url de descarga
       url = await getDownloadURL(fileRef);
     }
 
     //crear nueva tarea
-    const description = e.target.taskDescription.value;
     const task = {
       id: +new Date(),
-      description: description,
+      description,
       url,
       fileName,
     };
@@ -44,23 +45,12 @@ const TodolisthomeNewTask = ({ tasks, userEmail, setArrTasks }) => {
 
     //actualizar state
     setArrTasks(newTasks);
-    setFileName(null);
     setLoading(false);
     //console.log(dwnldURL);
 
     //limpiar input
     e.target.taskDescription.value = "";
     e.target.taskFile.value = "";
-  };
-
-  const handleAddFile = async (e) => {
-    //detectar archivo
-    const localFile = e.target.files[0];
-
-    //actualizar estado con nombre de archivo
-    setFileName(localFile.name);
-
-    //console.log(fileName);
   };
 
   return (
@@ -90,7 +80,6 @@ const TodolisthomeNewTask = ({ tasks, userEmail, setArrTasks }) => {
                 type="file"
                 placeholder="Añade archivo"
                 id="taskFile"
-                onChange={handleAddFile}
                 size="sm"
               />
             )}
