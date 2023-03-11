@@ -5,7 +5,7 @@
 //TO DO LIST
 
 //SHOPPING CART
-export const READ_DATA = "READ_DATA";
+export const READ_SHOP_DATA = "READ_DATA";
 export const ADD_TO_CART = "ADD_TO_CART";
 export const REMOVE_ONE_FROM_CART = "REMOVE_ONE_FROM_CART:";
 export const REMOVE_ALL_FROM_CART = "REMOVE_ALL_FROM_CART:";

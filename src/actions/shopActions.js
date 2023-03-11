@@ -1,13 +1,13 @@
 import {
+  READ_SHOP_DATA,
   ADD_TO_CART,
-  CLEAR_CART,
-  CLEAR_SHOP,
-  READ_DATA,
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
+  CLEAR_CART,
+  CLEAR_SHOP,
 } from "../types";
 
-export const readData = (data) => ({ type: READ_DATA, payload: data });
+export const readShopData = (data) => ({ type: READ_SHOP_DATA, payload: data });
 
 export const addToCart = (id) => ({ type: ADD_TO_CART, payload: id });
 

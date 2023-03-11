@@ -12,7 +12,12 @@ import { getStorage, ref, deleteObject } from "firebase/storage";
 const firestore = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
-const TodolisthomeTaskList = ({ setTask, tasks, userEmail, setArrTasks }) => {
+const TodolisthomeTaskList = ({
+  setTaskToUpdate,
+  tasks,
+  userEmail,
+  setArrTasks,
+}) => {
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async (id, fileName) => {
@@ -40,7 +45,7 @@ const TodolisthomeTaskList = ({ setTask, tasks, userEmail, setArrTasks }) => {
     //selecciono la description a editar
     document.querySelector("#taskDescription").value = task.description;
     document.querySelector("#taskDescription").focus();
-    setTask(task);
+    setTaskToUpdate(task);
   };
 
   return (

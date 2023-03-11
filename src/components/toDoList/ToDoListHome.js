@@ -12,7 +12,7 @@ const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
 
 const ToDoListHome = ({ userEmail }) => {
-  const [task, setTask] = useState(null);
+  const [taskToUpdate, setTaskToUpdate] = useState(null);
   const [arrTasks, setArrTasks] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -86,8 +86,8 @@ const ToDoListHome = ({ userEmail }) => {
       </Button>
       <hr />
       <TodolisthomeNewTask
-        setTask={setTask}
-        task={task}
+        setTaskToUpdate={setTaskToUpdate}
+        taskToUpdate={taskToUpdate}
         tasks={arrTasks}
         userEmail={userEmail}
         setArrTasks={setArrTasks}
@@ -100,7 +100,7 @@ const ToDoListHome = ({ userEmail }) => {
       )}
       {arrTasks ? (
         <TodolisthomeTaskList
-          setTask={setTask}
+          setTaskToUpdate={setTaskToUpdate}
           tasks={arrTasks}
           userEmail={userEmail}
           setArrTasks={setArrTasks}

@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { clearCart } from "../../actions/shopActions";
-import { loadStripe } from "@stripe/stripe-js";
-import { STRIPE_KEYS } from "../../assets/STRIPE_KEYS.js";
-import CartItem from "./CartItem";
-import Loader from "../Loader";
-import Alert from "react-bootstrap/Alert";
-import Badge from "react-bootstrap/Badge";
-import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Col from "react-bootstrap/Col";
-import ListGroup from "react-bootstrap/ListGroup";
-import Modal from "react-bootstrap/Modal";
+import {
+  Alert,
+  Badge,
+  Button,
+  ButtonGroup,
+  Col,
+  ListGroup,
+  Modal,
+  Spinner,
+} from "react-bootstrap";
 import {
   BoxArrowLeft,
   CheckAll,
@@ -19,6 +16,11 @@ import {
   Receipt,
   ArrowClockwise,
 } from "react-bootstrap-icons";
+import { useDispatch, useSelector } from "react-redux";
+import { clearCart } from "../../actions/shopActions";
+import { loadStripe } from "@stripe/stripe-js";
+import { STRIPE_KEYS } from "../../assets/STRIPE_KEYS.js";
+import CartItem from "./CartItem";
 
 const stripePromise = loadStripe(STRIPE_KEYS.public);
 
@@ -144,7 +146,6 @@ function Cart() {
               </Alert>
             </Col>
           )}
-          {loading && <Loader />}
           <Button
             variant="secondary"
             className="d-flex justify-content-center align-items-center"
@@ -152,24 +153,38 @@ function Cart() {
               setShow(false);
               setError(null);
             }}
+            size="lg"
           >
-            <BoxArrowLeft size="1.5rem" />
+            {loading ? <Spinner size="sm" /> : <BoxArrowLeft />}
           </Button>
           {cart.length >= 1 ? (
-            <Button
-              variant="success"
-              className="d-flex justify-content-center align-items-center"
-              onClick={() => handleSend(cart)}
-            >
-              <CheckAll size="1.5rem" />
-            </Button>
+            loading ? (
+              <Button
+                variant="success"
+                className="d-flex justify-content-center align-items-center"
+                disabled
+                size="lg"
+              >
+                <Spinner size="sm" />
+              </Button>
+            ) : (
+              <Button
+                variant="success"
+                className="d-flex justify-content-center align-items-center"
+                onClick={() => handleSend(cart)}
+                size="lg"
+              >
+                <CheckAll />
+              </Button>
+            )
           ) : (
             <Button
               variant="success"
               className="d-flex justify-content-center align-items-center"
               disabled
+              size="lg"
             >
-              <CheckAll size="1.5rem" />
+              <CheckAll />
             </Button>
           )}
         </Modal.Footer>

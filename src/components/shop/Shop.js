@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Alert from "react-bootstrap/Alert";
+import { Card, Row, Col, Alert, Image } from "react-bootstrap";
 import Cart from "./Cart";
 import StoreItem from "./StoreItem";
-import Image from "react-bootstrap/Image";
 import Ulises from "../../assets/shop-ulises.jpeg";
 import { useDispatch, useSelector } from "react-redux";
-import { clearShop, readData } from "../../actions/shopActions";
+import { clearShop, readShopData } from "../../actions/shopActions";
 import { STRIPE_KEYS } from "../../assets/STRIPE_KEYS.js";
 import Loader from "../Loader";
 
@@ -34,7 +30,7 @@ const Shop = () => {
         fetch(pricesURL, fetchOptions),
       ])
         .then((responses) => Promise.all(responses.map((res) => res.json())))
-        .then((json) => dispatch(readData(json)))
+        .then((json) => dispatch(readShopData(json)))
         .catch((err) => {
           //console.log(err);
           let message =

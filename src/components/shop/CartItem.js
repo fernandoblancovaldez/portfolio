@@ -1,12 +1,12 @@
-import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import ListGroup from "react-bootstrap/ListGroup";
-import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
-import Row from "react-bootstrap/Row";
-import { Dash } from "react-bootstrap-icons";
-import { Plus } from "react-bootstrap-icons";
-import { XCircleFill } from "react-bootstrap-icons";
+import {
+  Button,
+  ButtonGroup,
+  ListGroup,
+  Col,
+  Image,
+  Row,
+} from "react-bootstrap";
+import { Dash, Plus, XCircleFill } from "react-bootstrap-icons";
 import { useDispatch } from "react-redux";
 import { delFromCart, addToCart } from "../../actions/shopActions";
 

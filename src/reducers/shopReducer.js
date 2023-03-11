@@ -1,10 +1,10 @@
 import {
+  READ_SHOP_DATA,
   ADD_TO_CART,
-  CLEAR_CART,
-  CLEAR_SHOP,
-  READ_DATA,
   REMOVE_ALL_FROM_CART,
   REMOVE_ONE_FROM_CART,
+  CLEAR_CART,
+  CLEAR_SHOP,
 } from "../types";
 
 export const initialState = {
@@ -14,7 +14,7 @@ export const initialState = {
 
 export function shopReducer(state = initialState, action) {
   switch (action.type) {
-    case READ_DATA: {
+    case READ_SHOP_DATA: {
       const products = action.payload[0];
       const prices = action.payload[1];
 

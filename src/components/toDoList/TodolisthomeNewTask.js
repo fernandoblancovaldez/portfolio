@@ -14,8 +14,8 @@ const firestore = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
 const TodolisthomeNewTask = ({
-  task,
-  setTask,
+  taskToUpdate,
+  setTaskToUpdate,
   tasks,
   userEmail,
   setArrTasks,
@@ -30,14 +30,14 @@ const TodolisthomeNewTask = ({
     let newTasks, //nueva lista de tareas vacía para Upgrade
       newTask; //nueva tarea vacía para Create
 
-    if (task) {
+    if (taskToUpdate) {
       //si existe se Upgradea
 
       if (localFile) {
         //si hay archivo local para subir
         //se elimina el archivo en el storage de firestore SI existia con anterioridad
-        if (task.fileName) {
-          const oldFileRef = ref(storage, `docs/${task.fileName}`);
+        if (taskToUpdate.fileName) {
+          const oldFileRef = ref(storage, `docs/${taskToUpdate.fileName}`);
           await deleteObject(oldFileRef);
         }
 
@@ -50,7 +50,7 @@ const TodolisthomeNewTask = ({
 
         //crear nuevo arr de tasks modificando aquella tarea CON archivo q coincida el id
         newTasks = tasks.map((el) => {
-          if (el.id === task.id) {
+          if (el.id === taskToUpdate.id) {
             return {
               ...el,
               description,
@@ -61,15 +61,11 @@ const TodolisthomeNewTask = ({
             return el;
           }
         });
-        //actualizar base de datos del firestore
-        const refDoc = doc(firestore, `usuarios/${userEmail}`);
-        await updateDoc(refDoc, { tasks: [...newTasks] });
       } else {
         //si no hay localfile
-
         //crear nuevo arr de tasks modificando aquella tarea SIN archivo q coincida el id
         newTasks = tasks.map((el) => {
-          if (el.id === task.id) {
+          if (el.id === taskToUpdate.id) {
             return {
               ...el,
               description,
@@ -78,14 +74,14 @@ const TodolisthomeNewTask = ({
             return el;
           }
         });
-        //actualizar base de datos del firestore
-        const refDoc = doc(firestore, `usuarios/${userEmail}`);
-        await updateDoc(refDoc, { tasks: [...newTasks] });
       }
+      //actualizar base de datos del firestore
+      const refDoc = doc(firestore, `usuarios/${userEmail}`);
+      await updateDoc(refDoc, { tasks: [...newTasks] });
 
       //actualizar state
       setArrTasks(newTasks);
-      setTask(null);
+      setTaskToUpdate(null);
       setLoading(false);
       //console.log(dwnldURL);
 
@@ -93,7 +89,7 @@ const TodolisthomeNewTask = ({
       e.target.taskDescription.value = "";
       e.target.taskFile.value = "";
     } else {
-      // si no existe variable "task", se Crea una nueva tarea
+      // si no existe variable "taskToUpdate", se Crea una nueva tarea
 
       if (localFile) {
         const newFileRef = ref(storage, `docs/${localFile.name}`);
@@ -126,7 +122,6 @@ const TodolisthomeNewTask = ({
 
       //actualizar state
       setArrTasks(newTasks);
-      setTask(null);
       setLoading(false);
       //console.log(dwnldURL);
 
