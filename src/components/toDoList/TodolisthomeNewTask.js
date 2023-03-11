@@ -1,56 +1,140 @@
 import React, { useState } from "react";
 import { Container, Form, Row, Col, Button, Spinner } from "react-bootstrap";
 import { PlusCircleFill } from "react-bootstrap-icons";
-
 import firebaseApp from "../../helpers/toDoListCreds";
 import { getFirestore, doc, updateDoc } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 const firestore = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
-const TodolisthomeNewTask = ({ tasks, userEmail, setArrTasks }) => {
+const TodolisthomeNewTask = ({
+  task,
+  setTask,
+  tasks,
+  userEmail,
+  setArrTasks,
+}) => {
   const [loading, setLoading] = useState(false);
 
   const handleAddTask = async (e) => {
     e.preventDefault();
     setLoading(true);
     const description = e.target.taskDescription.value;
-    const localFile = e.target.taskFile.files[0];
-    const fileName = e.target.taskFile.files[0].name;
-    let url;
+    const localFile = e.target.taskFile.files[0] || null;
+    let newTasks, //nueva lista de tareas vacía para Upgrade
+      newTask; //nueva tarea vacía para Create
 
-    if (localFile) {
-      //cargar archivo a firebase storage si es que existe tal archivo
-      const fileRef = ref(storage, `docs/${fileName}`);
-      await uploadBytes(fileRef, localFile);
+    if (task) {
+      //si existe se Upgradea
 
-      //obtener url de descarga
-      url = await getDownloadURL(fileRef);
+      if (localFile) {
+        //si hay archivo local para subir
+        //se elimina el archivo en el storage de firestore SI existia con anterioridad
+        if (task.fileName) {
+          const oldFileRef = ref(storage, `docs/${task.fileName}`);
+          await deleteObject(oldFileRef);
+        }
+
+        //se sube el archivo local al storage
+        const newFileRef = ref(storage, `docs/${localFile.name}`);
+        await uploadBytes(newFileRef, localFile);
+
+        //obtener url de descarga
+        const fileUrl = await getDownloadURL(newFileRef);
+
+        //crear nuevo arr de tasks modificando aquella tarea CON archivo q coincida el id
+        newTasks = tasks.map((el) => {
+          if (el.id === task.id) {
+            return {
+              ...el,
+              description,
+              fileUrl,
+              fileName: localFile.name,
+            };
+          } else {
+            return el;
+          }
+        });
+        //actualizar base de datos del firestore
+        const refDoc = doc(firestore, `usuarios/${userEmail}`);
+        await updateDoc(refDoc, { tasks: [...newTasks] });
+      } else {
+        //si no hay localfile
+
+        //crear nuevo arr de tasks modificando aquella tarea SIN archivo q coincida el id
+        newTasks = tasks.map((el) => {
+          if (el.id === task.id) {
+            return {
+              ...el,
+              description,
+            };
+          } else {
+            return el;
+          }
+        });
+        //actualizar base de datos del firestore
+        const refDoc = doc(firestore, `usuarios/${userEmail}`);
+        await updateDoc(refDoc, { tasks: [...newTasks] });
+      }
+
+      //actualizar state
+      setArrTasks(newTasks);
+      setTask(null);
+      setLoading(false);
+      //console.log(dwnldURL);
+
+      //limpiar input
+      e.target.taskDescription.value = "";
+      e.target.taskFile.value = "";
+    } else {
+      // si no existe variable "task", se Crea una nueva tarea
+
+      if (localFile) {
+        const newFileRef = ref(storage, `docs/${localFile.name}`);
+        await uploadBytes(newFileRef, localFile);
+
+        //obtener url de descarga
+        let fileUrl = await getDownloadURL(newFileRef);
+
+        //crear nueva tarea CON archivo
+        newTask = {
+          id: +new Date(),
+          description,
+          fileUrl,
+          fileName: localFile.name,
+        };
+      } else {
+        //o crear nueva tarea SIN archivo
+        newTask = {
+          id: +new Date(),
+          description,
+        };
+      }
+
+      //crear nuevo array de tareas
+      const newTasks = [...tasks, newTask];
+
+      //actualizar base de datos
+      const refDoc = doc(firestore, `usuarios/${userEmail}`);
+      await updateDoc(refDoc, { tasks: [...newTasks] });
+
+      //actualizar state
+      setArrTasks(newTasks);
+      setTask(null);
+      setLoading(false);
+      //console.log(dwnldURL);
+
+      //limpiar input
+      e.target.taskDescription.value = "";
+      e.target.taskFile.value = "";
     }
-
-    //crear nueva tarea
-    const task = {
-      id: +new Date(),
-      description,
-      url,
-      fileName,
-    };
-
-    //crear nuevo array de tareas
-    const newTasks = [...tasks, task];
-
-    //actualizar base de datos
-    const refDoc = doc(firestore, `usuarios/${userEmail}`);
-    await updateDoc(refDoc, { tasks: [...newTasks] });
-
-    //actualizar state
-    setArrTasks(newTasks);
-    setLoading(false);
-    //console.log(dwnldURL);
-
-    //limpiar input
-    e.target.taskDescription.value = "";
-    e.target.taskFile.value = "";
+    //cargar archivo a firebase storage si es que existe tal archivo
   };
 
   return (

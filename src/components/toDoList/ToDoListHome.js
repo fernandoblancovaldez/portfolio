@@ -12,6 +12,7 @@ const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
 
 const ToDoListHome = ({ userEmail }) => {
+  const [task, setTask] = useState(null);
   const [arrTasks, setArrTasks] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -49,7 +50,6 @@ const ToDoListHome = ({ userEmail }) => {
         //revisar que exista el documento
         if (query.exists()) {
           //si existe
-
           const docInfo = query.data();
           return docInfo.tasks;
         } else {
@@ -86,6 +86,8 @@ const ToDoListHome = ({ userEmail }) => {
       </Button>
       <hr />
       <TodolisthomeNewTask
+        setTask={setTask}
+        task={task}
         tasks={arrTasks}
         userEmail={userEmail}
         setArrTasks={setArrTasks}
@@ -98,6 +100,7 @@ const ToDoListHome = ({ userEmail }) => {
       )}
       {arrTasks ? (
         <TodolisthomeTaskList
+          setTask={setTask}
           tasks={arrTasks}
           userEmail={userEmail}
           setArrTasks={setArrTasks}
