@@ -21,6 +21,7 @@ const ToDoListHome = () => {
     setLoading(true);
     dispatch(fetchTasks(globalUser.email));
     setLoading(false);
+    setError(false);
   }, [globalUser.email, initialData, dispatch]);
 
   return (
