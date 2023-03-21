@@ -1,42 +1,24 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { Button, Col, Container, Row, Spinner, Stack } from "react-bootstrap";
 import {
   XCircleFill,
   FileEarmarkFill,
   PencilFill,
 } from "react-bootstrap-icons";
+import { deleteTask, selectTaskToUpdate } from "../../actions/toDoListActions";
 
-import firebaseApp from "../../helpers/toDoListCreds";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
-import { getStorage, ref, deleteObject } from "firebase/storage";
-const firestore = getFirestore(firebaseApp);
-const storage = getStorage(firebaseApp);
-
-const TodolisthomeTaskList = ({
-  setTaskToUpdate,
-  tasks,
-  userEmail,
-  setArrTasks,
-}) => {
+const TodolisthomeTaskList = () => {
   const [loading, setLoading] = useState(false);
 
-  const handleDelete = async (id, fileName) => {
+  const state = useSelector((state) => state);
+  const { globalUser, arrTasks } = state.toDoList;
+  const dispatch = useDispatch();
+
+  const handleDelete = async (task) => {
     setLoading(true);
-    //crear nuevo array de tareas
-    const newTasks = tasks.filter((task) => task.id !== id);
-
-    //actualizar base de datos
-    const refDoc = doc(firestore, `usuarios/${userEmail}`);
-    await updateDoc(refDoc, { tasks: [...newTasks] });
-
-    //eliminar archivo del store si existe
-    if (fileName) {
-      const fileRef = ref(storage, `docs/${fileName}`);
-      await deleteObject(fileRef);
-    }
-
-    //actualizar state
-    setArrTasks(newTasks);
+    dispatch(deleteTask(task, arrTasks, globalUser));
     setLoading(false);
   };
 
@@ -45,13 +27,13 @@ const TodolisthomeTaskList = ({
     //selecciono la description a editar
     document.querySelector("#taskDescription").value = task.description;
     document.querySelector("#taskDescription").focus();
-    setTaskToUpdate(task);
+    dispatch(selectTaskToUpdate(task));
   };
 
   return (
     <Container>
       <Stack className="gap-2">
-        {tasks.map((task) => {
+        {arrTasks.map((task) => {
           return (
             <Row key={task.id} className="align-items-center gap-1">
               <Col xs="auto" className="text-dark">
@@ -100,7 +82,7 @@ const TodolisthomeTaskList = ({
                 ) : (
                   <Button
                     onClick={() => {
-                      handleDelete(task.id, task.fileName);
+                      handleDelete(task);
                     }}
                     variant="danger"
                     size="sm"

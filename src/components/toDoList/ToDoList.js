@@ -1,29 +1,25 @@
-import React, { useState } from "react";
-import Card from "react-bootstrap/Card";
-import Spinner from "react-bootstrap/Spinner";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { listenAuthState } from "../../actions/toDoListActions";
+import { Card, Spinner } from "react-bootstrap";
 import ToDoListHome from "./ToDoListHome";
 import ToDoListLogg from "./ToDoListLogg";
-import firebaseApp from "../../helpers/toDoListCreds";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-const auth = getAuth(firebaseApp);
 
 const ToDoList = () => {
-  const [globalUser, setGlobalUser] = useState(null);
+  const state = useSelector((state) => state);
+  const { globalUser } = state.toDoList;
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
-  onAuthStateChanged(auth, (userFirebase) => {
-    userFirebase ? setGlobalUser(userFirebase) : setGlobalUser(null);
+  useEffect(() => {
+    dispatch(listenAuthState());
     setLoading(false);
-  });
+  }, [dispatch]);
 
   return (
     <Card className="bg-transparent  text-secondary border-glass shadow py-3 gap-3 text-center align-items-center mx-auto">
       {loading && <Spinner />}
-      {globalUser ? (
-        <ToDoListHome userEmail={globalUser.email} />
-      ) : (
-        <ToDoListLogg />
-      )}
+      {globalUser ? <ToDoListHome /> : <ToDoListLogg />}
     </Card>
   );
 };

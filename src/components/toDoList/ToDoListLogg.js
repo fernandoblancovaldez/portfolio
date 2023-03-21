@@ -1,23 +1,27 @@
 import React, { useState } from "react";
-import { Stack, Container, Form, Button, Row } from "react-bootstrap";
-import Spinner from "react-bootstrap/Spinner";
-import Alert from "react-bootstrap/Alert";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  Stack,
+  Container,
+  Form,
+  Button,
+  Row,
+  Spinner,
+  Alert,
+} from "react-bootstrap";
 import { Google, DoorOpenFill, PersonFillAdd } from "react-bootstrap-icons";
 
-import firebaseApp from "../../helpers/toDoListCreds";
 import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithRedirect,
-  GoogleAuthProvider,
-} from "firebase/auth";
-
-const auth = getAuth(firebaseApp);
-const googleProvider = new GoogleAuthProvider();
+  createUserOrSignIn,
+  redirect,
+  switchLoggMethod,
+} from "../../actions/toDoListActions";
 
 const ToDoListLogg = () => {
-  const [userRegistering, setUserRegistering] = useState(false);
+  const state = useSelector((state) => state);
+  const { userRegistering } = state.toDoList;
+  const dispatch = useDispatch();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
 
@@ -28,29 +32,19 @@ const ToDoListLogg = () => {
 
     const email = e.target.formBasicEmail.value;
     const pass = e.target.formBasicPassword.value;
-    //console.log(email.length, pass.length);
 
-    userRegistering
-      ? await createUserWithEmailAndPassword(auth, email, pass)
-          .catch((err) => {
-            console.log(err);
-            let message =
-              err.statusText ||
-              `Ocurrió un error, revisa tus datos e intenta nuevamente.`;
-            setError(message);
-            //console.log(message);
-          })
-          .finally(() => setLoading(false))
-      : await signInWithEmailAndPassword(auth, email, pass)
-          .catch((err) => {
-            console.log(err);
-            let message =
-              err.statusText ||
-              `Ocurrió un error, revisa tus datos e intenta nuevamente.`;
-            setError(message);
-            //console.log(message);
-          })
-          .finally(() => setLoading(false));
+    dispatch(createUserOrSignIn(userRegistering, email, pass));
+    setLoading(false);
+  };
+
+  const handleRedirect = () => {
+    dispatch(redirect());
+    setLoading(true);
+  };
+
+  const handleLoggMethod = () => {
+    dispatch(switchLoggMethod());
+    setError(null);
   };
 
   return (
@@ -101,20 +95,11 @@ const ToDoListLogg = () => {
           <Button
             className="d-flex align-items-center justify-content-center"
             variant="primary"
-            onClick={() => {
-              signInWithRedirect(auth, googleProvider);
-              setLoading(true);
-            }}
+            onClick={handleRedirect}
           >
             <Google size="1.5rem" />
           </Button>
-          <Button
-            variant="secondary"
-            onClick={() => {
-              setUserRegistering(!userRegistering);
-              setError(null);
-            }}
-          >
+          <Button variant="secondary" onClick={handleLoggMethod}>
             {userRegistering
               ? "Ya tenés cuenta? Inicia sesión"
               : "No tenés cuenta? Registrate"}

@@ -1,111 +1,47 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import TodolisthomeNewTask from "./TodolisthomeNewTask";
 import TodolisthomeTaskList from "./TodolisthomeTaskList";
+import { Button, Container, Spinner, Alert } from "react-bootstrap";
+import { BoxArrowLeft } from "react-bootstrap-icons";
 import firebaseApp from "../../helpers/toDoListCreds";
 import { getAuth, signOut } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
-import { Button, Container } from "react-bootstrap";
-import Spinner from "react-bootstrap/Spinner";
-import Alert from "react-bootstrap/Alert";
-import { BoxArrowLeft } from "react-bootstrap-icons";
+import { fetchTasks } from "../../actions/toDoListActions";
 const auth = getAuth(firebaseApp);
-const firestore = getFirestore(firebaseApp);
 
-const ToDoListHome = ({ userEmail }) => {
-  const [taskToUpdate, setTaskToUpdate] = useState(null);
-  const [arrTasks, setArrTasks] = useState(null);
+const ToDoListHome = () => {
+  const state = useSelector((state) => state);
+  const { initialData, globalUser, arrTasks } = state.toDoList;
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      setLoading(true);
-      setError(null);
-
-      const searchOrCreateDoc = async (docId) => {
-        const initialData = [
-          {
-            id: 1,
-            description: "Tarea falsa 1",
-            url: "https://picsum.photos/420",
-          },
-          {
-            id: 2,
-            description: "Tarea falsa 2",
-            url: "https://picsum.photos/420",
-          },
-          {
-            id: 3,
-            description: "Tarea falsa 3",
-            url: "https://picsum.photos/420",
-          },
-        ];
-
-        //crear referencia al documento
-        const refDoc = doc(firestore, `usuarios/${docId}`);
-
-        //buscar documento
-        const query = await getDoc(refDoc);
-
-        //revisar que exista el documento
-        if (query.exists()) {
-          //si existe
-          const docInfo = query.data();
-          return docInfo.tasks;
-        } else {
-          //si no existe
-          await setDoc(refDoc, { tasks: [...initialData] });
-          const query = await getDoc(refDoc);
-          const docInfo = query.data();
-          return docInfo.tasks;
-        }
-      };
-
-      const tasks = await searchOrCreateDoc(userEmail).catch((err) => {
-        console.log(err);
-        let message =
-          err.statusText ||
-          `Ocurrió un error, revisa tus datos e intenta nuevamente.`;
-        setError(message);
-        console.log(message);
-      });
-      setArrTasks(tasks);
-      setLoading(false);
-    };
-
-    fetchTasks();
-  }, [userEmail]);
+    setLoading(true);
+    dispatch(fetchTasks(globalUser.email));
+    setLoading(false);
+  }, [globalUser.email, initialData, dispatch]);
 
   return (
     <Container>
       {loading && <Spinner />}
       <h4 className="text-dark">Bienvenid@</h4>
-      <h3 className="text-dark hero-font">{userEmail.split("@")[0]}</h3>
+      <h3 className="text-dark hero-font">
+        {globalUser.displayName || globalUser.email.split("@")[0]}
+      </h3>
       <Button variant="secondary" size="sm" onClick={() => signOut(auth)}>
         <BoxArrowLeft size="1.5rem" />
       </Button>
       <hr />
-      <TodolisthomeNewTask
-        setTaskToUpdate={setTaskToUpdate}
-        taskToUpdate={taskToUpdate}
-        tasks={arrTasks}
-        userEmail={userEmail}
-        setArrTasks={setArrTasks}
-      />
+      <TodolisthomeNewTask />
       <hr />
       {error && (
         <Alert variant="danger" className="text-center mt-3 mb-0">
           {error}
         </Alert>
       )}
-      {arrTasks ? (
-        <TodolisthomeTaskList
-          setTaskToUpdate={setTaskToUpdate}
-          tasks={arrTasks}
-          userEmail={userEmail}
-          setArrTasks={setArrTasks}
-        />
-      ) : null}
+      {arrTasks ? <TodolisthomeTaskList /> : null}
     </Container>
   );
 };
