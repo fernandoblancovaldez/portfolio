@@ -7,7 +7,7 @@ import { Button, Container, Spinner, Alert } from "react-bootstrap";
 import { BoxArrowLeft } from "react-bootstrap-icons";
 import firebaseApp from "../../helpers/toDoListCreds";
 import { getAuth, signOut } from "firebase/auth";
-import { fetchTasks } from "../../actions/toDoListActions";
+import { readTasks } from "../../actions/toDoListActions";
 const auth = getAuth(firebaseApp);
 
 const ToDoListHome = () => {
@@ -19,7 +19,7 @@ const ToDoListHome = () => {
 
   useEffect(() => {
     setLoading(true);
-    dispatch(fetchTasks(globalUser.email));
+    dispatch(readTasks(globalUser.email));
     setLoading(false);
     setError(false);
   }, [globalUser.email, initialData, dispatch]);
@@ -42,7 +42,7 @@ const ToDoListHome = () => {
           {error}
         </Alert>
       )}
-      {arrTasks ? <TodolisthomeTaskList /> : null}
+      {arrTasks && <TodolisthomeTaskList />}
     </Container>
   );
 };

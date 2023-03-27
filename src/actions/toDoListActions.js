@@ -30,31 +30,15 @@ const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
-export const listenAuthState = () => {
-  return (dispatch) =>
-    onAuthStateChanged(auth, (userFirebase) => {
-      userFirebase
-        ? dispatch(readUser(userFirebase))
-        : dispatch(readUser(null));
-    });
-};
-
-export const createUserOrSignIn = async (userRegistering, email, pass) => {
+export const createUserOrSignIn = (userRegistering, email, pass) => {
   userRegistering
-    ? await createUserWithEmailAndPassword(auth, email, pass)
-    : await signInWithEmailAndPassword(auth, email, pass);
+    ? createUserWithEmailAndPassword(auth, email, pass)
+    : signInWithEmailAndPassword(auth, email, pass);
 };
 
-export const redirect = async () => {
+export const redirect = () => {
   const googleProvider = new GoogleAuthProvider();
-  await signInWithRedirect(auth, googleProvider);
-};
-
-export const fetchTasks = (email) => {
-  return (dispatch) =>
-    getDoc(doc(firestore, `usuarios/${email}`))
-      .then((res) => res.data())
-      .then((res) => dispatch(readTasks(res.tasks)));
+  signInWithRedirect(auth, googleProvider);
 };
 
 export const updateTaskWithFile = (
@@ -156,11 +140,24 @@ export const createTaskNoFile = (description, arrTasks, globalUser) => {
   };
 };
 
-export const readUser = (data) => ({ type: READ_USER, payload: data });
-
 export const switchLoggMethod = () => ({ type: SWITCH_LOGG_METHOD });
 
-export const readTasks = (data) => ({ type: READ_TASKS, payload: data });
+export const readUser = () => {
+  return (dispatch) => {
+    onAuthStateChanged(auth, (userFirebase) => {
+      userFirebase
+        ? dispatch({ type: READ_USER, payload: userFirebase })
+        : dispatch({ type: READ_USER, payload: null });
+    });
+  };
+};
+
+export const readTasks = (email) => {
+  return (dispatch) =>
+    getDoc(doc(firestore, `usuarios/${email}`))
+      .then((res) => res.data())
+      .then((res) => dispatch({ type: READ_TASKS, payload: res.tasks }));
+};
 
 export const createTask = (data, file = false) =>
   file

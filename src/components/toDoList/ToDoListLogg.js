@@ -23,7 +23,12 @@ const ToDoListLogg = () => {
   const { userRegistering } = state.toDoList;
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const handleLoggMethod = () => {
+    dispatch(switchLoggMethod());
+    setError(null);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,17 +39,11 @@ const ToDoListLogg = () => {
     const pass = e.target.formBasicPassword.value;
 
     dispatch(createUserOrSignIn(userRegistering, email, pass));
-    setLoading(false);
   };
 
   const handleRedirect = () => {
-    dispatch(redirect());
     setLoading(true);
-  };
-
-  const handleLoggMethod = () => {
-    dispatch(switchLoggMethod());
-    setError(null);
+    dispatch(redirect());
   };
 
   return (

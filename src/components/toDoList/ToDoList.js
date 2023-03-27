@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listenAuthState } from "../../actions/toDoListActions";
+import { readUser } from "../../actions/toDoListActions";
 import { Card, Spinner } from "react-bootstrap";
 import ToDoListHome from "./ToDoListHome";
 import ToDoListLogg from "./ToDoListLogg";
@@ -9,10 +9,11 @@ const ToDoList = () => {
   const state = useSelector((state) => state);
   const { globalUser } = state.toDoList;
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(null);
 
   useEffect(() => {
-    dispatch(listenAuthState());
+    setLoading(true);
+    dispatch(readUser());
     setLoading(false);
   }, [dispatch]);
 
