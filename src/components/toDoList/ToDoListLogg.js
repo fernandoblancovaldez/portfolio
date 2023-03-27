@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  Stack,
-  Container,
-  Form,
-  Button,
-  Row,
-  Spinner,
-  Alert,
-} from "react-bootstrap";
+import { Stack, Container, Form, Button, Alert } from "react-bootstrap";
 import { Google, DoorOpenFill, PersonFillAdd } from "react-bootstrap-icons";
 
 import {
@@ -23,7 +15,6 @@ const ToDoListLogg = () => {
   const { userRegistering } = state.toDoList;
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   const handleLoggMethod = () => {
     dispatch(switchLoggMethod());
@@ -32,7 +23,7 @@ const ToDoListLogg = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+
     setError(null);
 
     const email = e.target.formBasicEmail.value;
@@ -42,7 +33,6 @@ const ToDoListLogg = () => {
   };
 
   const handleRedirect = () => {
-    setLoading(true);
     dispatch(redirect());
   };
 
@@ -50,11 +40,6 @@ const ToDoListLogg = () => {
     <div>
       <Container>
         <Stack className="gap-3">
-          {loading && (
-            <Row className="justify-content-center mt-3 mb-0">
-              <Spinner />
-            </Row>
-          )}
           <h1 className="text-dark">
             {userRegistering ? "Registrate" : "Inicia sesión"}
           </h1>

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button, Col, Container, Row, Spinner, Stack } from "react-bootstrap";
+import { Button, Col, Container, Row, Stack } from "react-bootstrap";
 import {
   XCircleFill,
   FileEarmarkFill,
@@ -10,16 +10,12 @@ import {
 import { deleteTask, selectTaskToUpdate } from "../../actions/toDoListActions";
 
 const TodolisthomeTaskList = () => {
-  const [loading, setLoading] = useState(false);
-
   const state = useSelector((state) => state);
   const { globalUser, arrTasks } = state.toDoList;
   const dispatch = useDispatch();
 
   const handleDelete = async (task) => {
-    setLoading(true);
     dispatch(deleteTask(task, arrTasks, globalUser));
-    setLoading(false);
   };
 
   const handleUpdate = (task) => {
@@ -70,27 +66,16 @@ const TodolisthomeTaskList = () => {
                 </Button>
               </Col>
               <Col xs="auto" className="p-0">
-                {loading ? (
-                  <Button
-                    disabled
-                    variant="danger"
-                    size="sm"
-                    className="d-flex mx-auto"
-                  >
-                    <Spinner size="sm" />
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={() => {
-                      handleDelete(task);
-                    }}
-                    variant="danger"
-                    size="sm"
-                    className="d-flex mx-auto"
-                  >
-                    <XCircleFill size="1rem" />
-                  </Button>
-                )}
+                <Button
+                  onClick={() => {
+                    handleDelete(task);
+                  }}
+                  variant="danger"
+                  size="sm"
+                  className="d-flex mx-auto"
+                >
+                  <XCircleFill size="1rem" />
+                </Button>
               </Col>
             </Row>
           );

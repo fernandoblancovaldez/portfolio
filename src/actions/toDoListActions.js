@@ -1,10 +1,12 @@
 import {
+  CLEAR_LIST,
   CREATE_TASK_NO_FILE,
   CREATE_TASK_WITH_FILE,
   DELETE_TASK,
   READ_TASKS,
   READ_USER,
   SELECT_TASK_TO_UPDATE,
+  SHOW_LOADER,
   SWITCH_LOGG_METHOD,
   UPDATE_TASK_NO_FILE,
   UPDATE_TASK_WITH_FILE,
@@ -31,14 +33,20 @@ const firestore = getFirestore(firebaseApp);
 const storage = getStorage(firebaseApp);
 
 export const createUserOrSignIn = (userRegistering, email, pass) => {
-  userRegistering
-    ? createUserWithEmailAndPassword(auth, email, pass)
-    : signInWithEmailAndPassword(auth, email, pass);
+  return (dispatch) => {
+    dispatch(showLoader());
+    userRegistering
+      ? createUserWithEmailAndPassword(auth, email, pass)
+      : signInWithEmailAndPassword(auth, email, pass);
+  };
 };
 
 export const redirect = () => {
-  const googleProvider = new GoogleAuthProvider();
-  signInWithRedirect(auth, googleProvider);
+  return (dispatch) => {
+    dispatch(showLoader());
+    const googleProvider = new GoogleAuthProvider();
+    signInWithRedirect(auth, googleProvider);
+  };
 };
 
 export const updateTaskWithFile = (
@@ -49,6 +57,7 @@ export const updateTaskWithFile = (
   globalUser
 ) => {
   return async (dispatch) => {
+    dispatch(showLoader());
     if (taskToUpdate.fileName) {
       deleteObject(ref(storage, `docs/${taskToUpdate.fileName}`));
     }
@@ -85,6 +94,8 @@ export const updateTaskNoFile = (
   globalUser
 ) => {
   return async (dispatch) => {
+    dispatch(showLoader());
+
     const newTasks = arrTasks.map((el) => {
       if (el.id === taskToUpdate.id) {
         return {
@@ -110,6 +121,8 @@ export const createTaskWithFile = (
   globalUser
 ) => {
   return async (dispatch) => {
+    dispatch(showLoader());
+
     await uploadBytes(ref(storage, `docs/${localFile.name}`), localFile);
     const url = await getDownloadURL(ref(storage, `docs/${localFile.name}`));
     const newTask = {
@@ -128,6 +141,8 @@ export const createTaskWithFile = (
 
 export const createTaskNoFile = (description, arrTasks, globalUser) => {
   return async (dispatch) => {
+    dispatch(showLoader());
+
     const newTask = {
       id: +new Date(),
       description,
@@ -153,10 +168,13 @@ export const readUser = () => {
 };
 
 export const readTasks = (email) => {
-  return (dispatch) =>
+  return (dispatch) => {
+    dispatch(showLoader());
+
     getDoc(doc(firestore, `usuarios/${email}`))
       .then((res) => res.data())
       .then((res) => dispatch({ type: READ_TASKS, payload: res.tasks }));
+  };
 };
 
 export const createTask = (data, file = false) =>
@@ -176,6 +194,8 @@ export const updateTask = (data, file = false) =>
 
 export const deleteTask = (task, arrTasks, globalUser) => {
   return async (dispatch) => {
+    dispatch(showLoader());
+
     const newTasks = arrTasks.filter((el) => el.id !== task.id);
     const refDoc = doc(firestore, `usuarios/${globalUser.email}`);
     await updateDoc(refDoc, { tasks: [...newTasks] });
@@ -186,3 +206,11 @@ export const deleteTask = (task, arrTasks, globalUser) => {
     dispatch({ type: DELETE_TASK, payload: task });
   };
 };
+
+export const showLoader = (show = true) => ({
+  type: SHOW_LOADER,
+  payload: show,
+});
+export const clearList = () => ({
+  type: CLEAR_LIST,
+});
