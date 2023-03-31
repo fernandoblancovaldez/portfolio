@@ -1,17 +1,18 @@
-export default async function getLocation(setCurrentPosition) {
-  const options = {
-    enableHighAccuracy: true,
-    timeOut: 5000,
-    maximumAge: 0,
-  };
-
-  const success = async (position) => {
-    let coords = await position.coords;
-    await setCurrentPosition(coords);
-  };
-  const error = (err) => {
-    console.log(err);
-  };
-
-  await navigator.geolocation.getCurrentPosition(success, error, options);
-}
+export const getLocation = async () => {
+  return new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        resolve(coords);
+      },
+      (err) => {
+        console.log(err);
+        reject();
+      },
+      {
+        enableHighAccuracy: true,
+        timeOut: 5000,
+        maximumAge: 0,
+      }
+    );
+  });
+};

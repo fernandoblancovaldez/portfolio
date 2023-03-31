@@ -11,7 +11,7 @@ const GlobalLoader = () => {
       show={loading}
       backdrop="static"
       keyboard={false}
-      className="d-flex rounded-pill"
+      className="d-flex justify-content-center rounded-pill"
       centered
     >
       <Spinner className="m-4" />

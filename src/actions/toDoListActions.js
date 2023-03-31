@@ -211,6 +211,7 @@ export const showLoader = (show = true) => ({
   type: SHOW_LOADER,
   payload: show,
 });
+
 export const clearList = () => ({
   type: CLEAR_LIST,
 });

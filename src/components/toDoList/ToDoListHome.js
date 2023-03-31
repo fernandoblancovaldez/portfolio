@@ -12,14 +12,14 @@ const auth = getAuth(firebaseApp);
 
 const ToDoListHome = () => {
   const state = useSelector((state) => state);
-  const { initialData, globalUser, arrTasks } = state.toDoList;
+  const { globalUser, arrTasks } = state.toDoList;
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
 
   useEffect(() => {
     dispatch(readTasks(globalUser.email));
     setError(false);
-  }, [globalUser.email, initialData, dispatch]);
+  }, [globalUser.email, dispatch]);
 
   return (
     <Container>
