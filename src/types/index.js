@@ -1,4 +1,7 @@
 //TV SHOW SEARCHER
+export const SEARCH_SHOW = "SEARCH_SHOW";
+export const ON_OFF_LOADER = "ON_OFF_LOADER";
+export const CLEAR_SHOWS = "CLEAR_SHOWS";
 
 //WEATHER
 export const READ_WEATHER = "READ_WEATHER";

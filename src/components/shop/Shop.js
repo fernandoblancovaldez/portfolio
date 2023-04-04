@@ -13,7 +13,7 @@ const Shop = () => {
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const { items } = state.shop;
+  const { items, cart } = state.shop;
 
   useEffect(() => {
     const itemsURL = "https://api.stripe.com/v1/products";
@@ -76,7 +76,7 @@ const Shop = () => {
         )}
         {loading && <Loader />}
         {items.map((item) => (
-          <StoreItem key={item.id} data={item} />
+          <StoreItem key={item.id} data={item} cart={cart} />
         ))}
       </Row>
     </Card>

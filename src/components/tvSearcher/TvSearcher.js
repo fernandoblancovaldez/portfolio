@@ -1,62 +1,26 @@
-import React, { useState, useEffect } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
-import Loader from "../Loader";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { clearShows, searchShow } from "../../actions/tvSearcherActions";
+import { ButtonGroup, Button, Row, Col, Card, Spinner } from "react-bootstrap";
+import { Trash3Fill, Search } from "react-bootstrap-icons";
 import TvShow from "./TvShow";
 
 const TvSearcher = () => {
-  const [inputData, setInputData] = useState("");
-  const [queryToUrl, setQueryToUrl] = useState("");
-  const [shows, setShows] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const state = useSelector((state) => state);
+  const { shows, loading } = state.tvSearcher;
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const getShows = async () => {
-      setShows([]);
-      setInputData(null);
-      document.querySelector(".search").value = "";
-
-      let res = await fetch(
-          `https://api.tvmaze.com/search/shows?q=${queryToUrl}`
-        ),
-        json = await res.json();
-
-      json.forEach((el) => {
-        let show = {
-          key: el.show.id,
-          name: el.show.name,
-          text: el.show.summary
-            ? el.show.summary.replace(/<[^>]*>/g, "")
-            : "Sin descripción",
-          img: el.show.image
-            ? el.show.image.medium
-            : "https://static.tvmaze.com/images/no-img/no-img-portrait-text.png",
-          url: el.show.url ? el.show.url : "#",
-        };
-        setShows((shows) => [...shows, show]);
-      });
-      setLoading(false);
-    };
-    getShows();
-  }, [queryToUrl]);
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    await setInputData(null);
-
-    if (!inputData) {
-      await setShows([]);
+    let query = document.querySelector("#tv-show-search").value.toLowerCase();
+    if (!query) {
       alert("Ingrese datos para una nueva búsqueda");
       return;
+    } else {
+      dispatch(searchShow(query));
     }
 
-    await setQueryToUrl(inputData);
-  };
-
-  const handleChange = (e) => {
-    setInputData(e.target.value.toLowerCase());
+    document.querySelector("#tv-show-search").value = null;
   };
 
   return (
@@ -67,32 +31,56 @@ const TvSearcher = () => {
             <input
               className="form-control search"
               type="search"
-              id="search"
+              id="tv-show-search"
               placeholder="Buscar shows de tv..."
               autoComplete="off"
-              onChange={handleChange}
-              /* value={inputData} */
             />
           </Col>
-          <Col className="d-grid gap-2">
-            <input type="submit" value="Buscar" className="btn btn-secondary" />
+          <Col className="col-auto">
+            <ButtonGroup>
+              <Button
+                type="submit"
+                className="d-flex justify-content-center align-items-center"
+                variant="dark"
+              >
+                {loading ? <Spinner size="sm" /> : <Search size="1.5rem" />}
+              </Button>
+              {shows.length > 0 ? (
+                <Button
+                  className="d-flex justify-content-center align-items-center"
+                  variant="dark"
+                  onClick={() => dispatch(clearShows())}
+                >
+                  <Trash3Fill size="1.5rem" />
+                </Button>
+              ) : (
+                <Button
+                  disabled
+                  className="d-flex justify-content-center align-items-center"
+                  variant="dark"
+                >
+                  <Trash3Fill size="1.5rem" />
+                </Button>
+              )}
+            </ButtonGroup>
           </Col>
         </Row>
       </form>
-      <Row className="gap-1 mt-3 align-items-center justify-content-around ">
-        {loading && <Loader />}
-        {shows &&
-          !loading &&
-          shows.map((show) => (
-            <TvShow
-              key={show.key}
-              name={show.name}
-              text={show.text}
-              img={show.img}
-              url={show.url}
-            />
-          ))}
-      </Row>
+      {shows.length > 0 && (
+        <Row className="gap-1 mt-3 align-items-center justify-content-around ">
+          {shows &&
+            !loading &&
+            shows.map((show) => (
+              <TvShow
+                key={show.key}
+                name={show.name}
+                text={show.text}
+                img={show.img}
+                url={show.url}
+              />
+            ))}
+        </Row>
+      )}
     </Card>
   );
 };
