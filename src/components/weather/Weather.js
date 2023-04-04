@@ -16,9 +16,9 @@ const Weather = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dataToApi
-      ? dispatch(readWeather(dataToApi))
-      : dispatch(searchLocalWeather());
+    !dataToApi
+      ? dispatch(searchLocalWeather())
+      : dispatch(readWeather(dataToApi));
   }, [dispatch, dataToApi]);
 
   const handleCurrentLocate = (e) => {
@@ -31,6 +31,7 @@ const Weather = () => {
     e.preventDefault();
     let query = document.querySelector("#weather-search").value;
     dispatch(searchInputWeather(query));
+    document.querySelector("#weather-search").value = "";
   };
 
   return (
