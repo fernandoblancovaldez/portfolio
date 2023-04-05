@@ -16,7 +16,7 @@ function Skills() {
           <ul>
             <li>JavaScript</li>
             <li>React JS</li>
-            <li>Redux</li>
+            <li>Redux (Thunk)</li>
             <li>Context API</li>
             <li>Ajax</li>
             <li>Fetch</li>

@@ -14,7 +14,7 @@ import {
   CheckAll,
   Cart2,
   Receipt,
-  ArrowClockwise,
+  Trash3Fill,
 } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCart } from "../../actions/shopActions";
@@ -89,7 +89,7 @@ function Cart() {
               variant="secondary"
               onClick={() => dispatch(clearCart())}
             >
-              <ArrowClockwise size="1.5rem" />
+              <Trash3Fill size="1.5rem" />
             </Button>
           </>
         ) : (
@@ -106,7 +106,7 @@ function Cart() {
               className="d-flex justify-content-center align-items-center"
               variant="secondary"
             >
-              <ArrowClockwise size="1.5rem" />
+              <Trash3Fill size="1.5rem" />
             </Button>
           </>
         )}

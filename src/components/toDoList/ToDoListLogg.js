@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { Stack, Container, Form, Button, Alert } from "react-bootstrap";
 import { Google, DoorOpenFill, PersonFillAdd } from "react-bootstrap-icons";
 

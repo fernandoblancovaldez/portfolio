@@ -2,11 +2,13 @@ import {
   READ_WEATHER,
   SEARCH_INPUT_WEATHER,
   SEARCH_LOCAL_WEATHER,
+  SET_WEATHER_LOADING,
 } from "../types";
 
 export const initialState = {
   weatherInfo: null,
   dataToApi: null,
+  loading: true,
 };
 
 export function weatherReducer(state = initialState, action) {
@@ -25,6 +27,9 @@ export function weatherReducer(state = initialState, action) {
         ...state,
         dataToApi: `q=${action.payload}`,
       };
+    }
+    case SET_WEATHER_LOADING: {
+      return { ...state, loading: action.payload };
     }
     default:
       return state;

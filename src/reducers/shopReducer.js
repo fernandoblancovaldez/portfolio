@@ -5,11 +5,15 @@ import {
   REMOVE_ONE_FROM_CART,
   CLEAR_CART,
   CLEAR_SHOP,
+  SET_SHOP_LOADING,
+  SET_SHOP_ERROR,
 } from "../types";
 
 export const initialState = {
   items: [],
   cart: [],
+  loading: true,
+  error: null,
 };
 
 export function shopReducer(state = initialState, action) {
@@ -98,6 +102,12 @@ export function shopReducer(state = initialState, action) {
     }
     case CLEAR_SHOP: {
       return initialState;
+    }
+    case SET_SHOP_LOADING: {
+      return { ...state, loading: action.payload };
+    }
+    case SET_SHOP_ERROR: {
+      return { ...state, error: action.payload };
     }
     default:
       return state;

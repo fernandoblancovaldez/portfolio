@@ -1,49 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { Card, Row, Col, Alert, Image } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Card, Row, Col, Alert, Image, Spinner } from "react-bootstrap";
 import Cart from "./Cart";
 import StoreItem from "./StoreItem";
 import Ulises from "../../assets/shop-ulises.jpeg";
 import { useDispatch, useSelector } from "react-redux";
-import { clearShop, readShopData } from "../../actions/shopActions";
-import { STRIPE_KEYS } from "../../assets/STRIPE_KEYS.js";
-import Loader from "../Loader";
+import {
+  clearShop,
+  readShopData,
+  setShopError,
+} from "../../actions/shopActions";
 
 const Shop = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const { items, cart } = state.shop;
+  const { items, cart, loading, error } = state.shop;
 
   useEffect(() => {
-    const itemsURL = "https://api.stripe.com/v1/products";
-    const pricesURL = "https://api.stripe.com/v1/prices";
-    const fetchOptions = {
-      headers: {
-        Authorization: `Bearer ${STRIPE_KEYS.secret}`,
-      },
-    };
-
-    const getData = () => {
-      Promise.all([
-        fetch(itemsURL, fetchOptions),
-        fetch(pricesURL, fetchOptions),
-      ])
-        .then((responses) => Promise.all(responses.map((res) => res.json())))
-        .then((json) => dispatch(readShopData(json)))
-        .catch((err) => {
-          //console.log(err);
-          let message =
-            err.statusText ||
-            "Ocurrió un error al conectarse con el API de Stripe";
-          setError(`Error ${err.status}: ${message}`);
-        })
-        .finally(() => setLoading(false));
-    };
-    getData();
+    dispatch(readShopData());
 
     return () => {
-      setError(null);
+      dispatch(setShopError(null));
       dispatch(clearShop());
     };
   }, [dispatch]);
@@ -74,7 +50,7 @@ const Shop = () => {
             {error}
           </Alert>
         )}
-        {loading && <Loader />}
+        {loading && <Spinner />}
         {items.map((item) => (
           <StoreItem key={item.id} data={item} cart={cart} />
         ))}

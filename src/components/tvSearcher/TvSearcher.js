@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearShows, searchShow } from "../../actions/tvSearcherActions";
-import { ButtonGroup, Button, Row, Col, Card, Spinner } from "react-bootstrap";
+import { Button, Row, Card, Spinner } from "react-bootstrap";
 import { Trash3Fill, Search } from "react-bootstrap-icons";
 import TvShow from "./TvShow";
 
@@ -13,13 +13,7 @@ const TvSearcher = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     let query = document.querySelector("#tv-show-search").value.toLowerCase();
-    if (!query) {
-      alert("Ingrese datos para una nueva búsqueda");
-      return;
-    } else {
-      dispatch(searchShow(query));
-    }
-
+    dispatch(searchShow(query));
     document.querySelector("#tv-show-search").value = null;
   };
 
@@ -27,43 +21,40 @@ const TvSearcher = () => {
     <Card body className="bg-transparent border-glass">
       <form onSubmit={handleSubmit}>
         <Row>
-          <Col>
+          <div className="input-group">
             <input
               className="form-control search"
               type="search"
               id="tv-show-search"
               placeholder="Buscar shows de tv..."
               autoComplete="off"
+              required
             />
-          </Col>
-          <Col className="col-auto">
-            <ButtonGroup>
+            {shows.length > 0 ? (
               <Button
-                type="submit"
+                className="d-flex justify-content-center align-items-center"
+                variant="dark"
+                onClick={() => dispatch(clearShows())}
+              >
+                <Trash3Fill size="1.5rem" />
+              </Button>
+            ) : (
+              <Button
+                disabled
                 className="d-flex justify-content-center align-items-center"
                 variant="dark"
               >
-                {loading ? <Spinner size="sm" /> : <Search size="1.5rem" />}
+                <Trash3Fill size="1.5rem" />
               </Button>
-              {shows.length > 0 ? (
-                <Button
-                  className="d-flex justify-content-center align-items-center"
-                  variant="dark"
-                  onClick={() => dispatch(clearShows())}
-                >
-                  <Trash3Fill size="1.5rem" />
-                </Button>
-              ) : (
-                <Button
-                  disabled
-                  className="d-flex justify-content-center align-items-center"
-                  variant="dark"
-                >
-                  <Trash3Fill size="1.5rem" />
-                </Button>
-              )}
-            </ButtonGroup>
-          </Col>
+            )}
+            <Button
+              type="submit"
+              className="d-flex justify-content-center align-items-center"
+              variant="dark"
+            >
+              {loading ? <Spinner size="sm" /> : <Search size="1.5rem" />}
+            </Button>
+          </div>
         </Row>
       </form>
       {shows.length > 0 && (

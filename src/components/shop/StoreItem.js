@@ -11,7 +11,6 @@ const StoreItem = ({ data, cart }) => {
   const dispatch = useDispatch();
   let { name, id, fullPrice, url } = data;
   let { quantity } = cart.find((el) => el.id === id) || {};
-  console.log(quantity);
 
   return (
     <Card className="p-0 border-glass fluid-card ">
