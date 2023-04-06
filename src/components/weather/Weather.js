@@ -3,31 +3,34 @@ import { Card, Row, Button, Spinner } from "react-bootstrap";
 import { GeoAltFill, Search } from "react-bootstrap-icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  readWeather,
   searchInputWeather,
   searchLocalWeather,
+  setWeatherLoading,
 } from "../../actions/weatherActions";
 import WeatherData from "./WeatherData";
 
 const Weather = () => {
   const state = useSelector((state) => state);
-  const { dataToApi, loading } = state.weather;
+  const { weatherInfo, loading } = state.weather;
   const dispatch = useDispatch();
 
   useEffect(() => {
-    !dataToApi
-      ? dispatch(searchLocalWeather())
-      : dispatch(readWeather(dataToApi));
-  }, [dispatch, dataToApi]);
+    if (!weatherInfo) {
+      dispatch(setWeatherLoading(true));
+      dispatch(searchLocalWeather());
+    }
+  }, [dispatch, weatherInfo]);
 
   const handleCurrentLocate = (e) => {
     e.preventDefault();
+    dispatch(setWeatherLoading(true));
     dispatch(searchLocalWeather());
     document.querySelector("#weather-search").value = "";
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(setWeatherLoading(true));
     let query = document.querySelector("#weather-search").value;
     dispatch(searchInputWeather(query));
     document.querySelector("#weather-search").value = "";

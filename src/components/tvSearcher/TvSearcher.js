@@ -36,7 +36,7 @@ const TvSearcher = () => {
                 variant="dark"
                 onClick={() => dispatch(clearShows())}
               >
-                <Trash3Fill size="1.5rem" />
+                <Trash3Fill />
               </Button>
             ) : (
               <Button
@@ -44,7 +44,7 @@ const TvSearcher = () => {
                 className="d-flex justify-content-center align-items-center"
                 variant="dark"
               >
-                <Trash3Fill size="1.5rem" />
+                <Trash3Fill />
               </Button>
             )}
             <Button
@@ -52,7 +52,7 @@ const TvSearcher = () => {
               className="d-flex justify-content-center align-items-center"
               variant="dark"
             >
-              {loading ? <Spinner size="sm" /> : <Search size="1.5rem" />}
+              {loading ? <Spinner size="sm" /> : <Search />}
             </Button>
           </div>
         </Row>

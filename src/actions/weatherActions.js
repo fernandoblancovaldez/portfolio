@@ -1,10 +1,5 @@
 import { getLocation } from "../helpers/getLocation";
-import {
-  READ_WEATHER,
-  SEARCH_INPUT_WEATHER,
-  SEARCH_LOCAL_WEATHER,
-  SET_WEATHER_LOADING,
-} from "../types";
+import { READ_WEATHER, SET_WEATHER_LOADING } from "../types";
 const weatherApiKey = "6ec6130360ef0c0a8405d52ffaf7b224";
 
 export const readWeather = (data) => {
@@ -14,30 +9,21 @@ export const readWeather = (data) => {
       .then((res) => res.json())
       .then((res) => {
         dispatch({ type: READ_WEATHER, payload: res });
-        dispatch(setWeatherLoading(false));
       });
   };
 };
 
 export const searchLocalWeather = () => {
   return (dispatch) => {
-    dispatch(setWeatherLoading(true));
     getLocation().then((coords) => {
-      dispatch({
-        type: SEARCH_LOCAL_WEATHER,
-        payload: coords,
-      });
+      dispatch(readWeather(`lat=${coords.latitude}&lon=${coords.longitude}`));
     });
   };
 };
 
 export const searchInputWeather = (data) => {
   return (dispatch) => {
-    dispatch(setWeatherLoading(true));
-    dispatch({
-      type: SEARCH_INPUT_WEATHER,
-      payload: data,
-    });
+    dispatch(readWeather(`q=${data}`));
   };
 };
 
