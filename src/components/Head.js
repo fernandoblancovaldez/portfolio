@@ -2,6 +2,7 @@ import {
   BriefcaseFill,
   HouseDoorFill,
   PersonFill,
+  Code,
 } from "react-bootstrap-icons";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -19,10 +20,10 @@ function Head() {
               <em>blanco</em>
             </Navbar.Brand>
           </LinkContainer>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" replace />
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="flex-row justify-content-evenly ms-lg-auto">
-              <LinkContainer exact to="/">
+              <LinkContainer exact to="/" replace>
                 <Nav.Link className="nav-icon bg-dark text-light text-center">
                   <HouseDoorFill />
                 </Nav.Link>
@@ -37,6 +38,14 @@ function Head() {
                   <BriefcaseFill />
                 </Nav.Link>
               </LinkContainer>
+              <Nav.Link
+                className="nav-icon bg-dark text-light text-center"
+                href="https://github.com/fernandoblancovaldez/portfolio"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <Code size="1.5rem" />
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
